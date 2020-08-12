@@ -1,8 +1,8 @@
-import { createStore, applyMiddleware, compose } from 'redux'
-import reducers from '@/reducers'
-import reduxThunk from 'redux-thunk'
+import { createStore, applyMiddleware, compose } from 'redux';
+import reducers from '@/reducers';
+import reduxThunk from 'redux-thunk';
 
-const isDev = process.env.NODE_ENV === 'development'
+const isDev = process.env.NODE_ENV === 'development';
 
 const store = createStore(
   reducers,
@@ -12,8 +12,8 @@ const store = createStore(
       window.__REDUX_DEVTOOLS_EXTENSION__ &&
       window.__REDUX_DEVTOOLS_EXTENSION__()
   )
-)
+);
 
-if (isDev) store.subscribe(() => console.log(store.getState()))
+if (isDev) store.subscribe(() => console.log(store.getState()));
 
-export default store
+export default store;
