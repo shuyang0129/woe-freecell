@@ -112,7 +112,7 @@ const FoundationCell = styled.div`
   }
 `;
 
-const ControllerButton = styled.button`
+const ControllButton = styled.button`
   padding: 12px 24px;
   font-size: 12px;
   line-height: 15px;
@@ -123,12 +123,12 @@ const ControllerButton = styled.button`
   border-radius: 50px;
 `;
 
-const ControllerButtons = styled.div`
+const ControllButtons = styled.div`
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
 
-  ${ControllerButton} {
+  ${ControllButton} {
     margin-right: 15px;
     &::last-child {
       margin-right: 0;
@@ -204,12 +204,12 @@ function App() {
           <span>TIME: 00:00</span>
           <span>SCORE: 0</span>
         </GameInfo>
-        <ControllerButtons>
-          <ControllerButton>NEW GAME</ControllerButton>
-          <ControllerButton>RESTART</ControllerButton>
-          <ControllerButton>HINT</ControllerButton>
-          <ControllerButton>UNDO</ControllerButton>
-        </ControllerButtons>
+        <ControllButtons>
+          <ControllButton>NEW GAME</ControllButton>
+          <ControllButton>RESTART</ControllButton>
+          <ControllButton>HINT</ControllButton>
+          <ControllButton>UNDO</ControllButton>
+        </ControllButtons>
       </FooterArea>
     </Container>
   );
