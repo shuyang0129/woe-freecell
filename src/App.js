@@ -1,24 +1,48 @@
 import React from 'react';
-import Title from '@components/Title';
+import styled from 'styled-components';
+
+const Container = styled.div`
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-flow: column nowrap;
+  align-items: center;
+  background-color: #e2e2e2;
+`;
+
+const HeaderArea = styled.header`
+  display: flex;
+  width: 100%;
+  flex-flow: row nowrap;
+  align-items: center;
+  background: green;
+`;
+
+const MainArea = styled.main`
+  flex: 1 1 0;
+  display: flex;
+  width: 100%;
+  flex-flow: row nowrap;
+  align-items: center;
+  background: yellowgreen;
+`;
+
+const FooterArea = styled.footer`
+  flex: 0 0 auto;
+  display: flex;
+  width: 100%;
+  flex-flow: row nowrap;
+  align-items: center;
+  background: pink;
+`;
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <Title />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container>
+      <HeaderArea>Header</HeaderArea>
+      <MainArea>Main</MainArea>
+      <FooterArea>Footer</FooterArea>
+    </Container>
   );
 }
 
