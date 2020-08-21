@@ -11,11 +11,11 @@ const Card = ({ name }) => {
    * @description 使用dynamic import，載入撲克牌圖片
    * @returns Promise => res.default 才是我們要的值
    */
-  const getImg = name => import(`@assets/img/cards_background/${name}.png`);
+  const getImg = name => import(`@assets/img/cards/${name}.png`);
 
   useEffect(() => {
     getImg(name).then(({ default: src }) => setImgSrc(src));
-  }, []);
+  }, [name]);
 
   return !!imgSrc ? <S.Card src={imgSrc} alt="poker card" /> : null;
 };

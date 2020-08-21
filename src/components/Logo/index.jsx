@@ -1,6 +1,6 @@
 import React from 'react';
 
-import King from '@assets/img/king_happy.png';
+import King from '@assets/img/logo/king_happy.png';
 
 import * as S from './style';
 
