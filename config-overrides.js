@@ -7,8 +7,8 @@ module.exports = function override(config, env) {
   config = rewireAliases.aliasesOptions({
     '@': path.resolve(__dirname, `${paths.appSrc}/`),
     '@assets': path.resolve(__dirname, `${paths.appSrc}/assets/`),
-    '@img': path.resolve(__dirname, `${paths.appSrc}/img/`),
-    '@data': path.resolve(__dirname, `${paths.appSrc}/data/`),
+    '@img': path.resolve(__dirname, `${paths.appSrc}/assets/img/`),
+    '@data': path.resolve(__dirname, `${paths.appSrc}/assets/data/`),
     '@constants': path.resolve(__dirname, `${paths.appSrc}/constants/`),
     '@pages': path.resolve(__dirname, `${paths.appSrc}/pages/`),
     '@components': path.resolve(__dirname, `${paths.appSrc}/components/`),
