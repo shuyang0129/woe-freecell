@@ -1,3 +1,9 @@
+import * as suit from '@constants/suits';
+
+import C from '@img/suits/C.png';
+import D from '@img/suits/D.png';
+import H from '@img/suits/H.png';
+import S from '@img/suits/S.png';
 import styled from 'styled-components';
 
 export const FoundationCells = styled.div`
@@ -7,12 +13,18 @@ export const FoundationCells = styled.div`
 `;
 
 export const FoundationCell = styled.div`
-  background: rgba(252, 252, 252, 0.6);
+  position: relative;
   border-radius: 5px;
   height: 145px;
   margin-right: 15px;
   position: relative;
   width: 95px;
+  background-color: ${props => props.color};
+  background-color: rgba(252, 252, 252, 0.6);
+  background-image: url(${({ suit }) => getSuitImg(suit)});
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 35px 35px;
 
   &:last-child {
     margin-right: 0;
@@ -23,3 +35,18 @@ export const FoundationCell = styled.div`
     top: 0;
   }
 `;
+
+const getSuitImg = suitType => {
+  switch (suitType) {
+    case suit.HEART:
+      return H;
+    case suit.DIAMOND:
+      return D;
+    case suit.SPADE:
+      return S;
+    case suit.CLUB:
+      return C;
+    default:
+      return null;
+  }
+};
