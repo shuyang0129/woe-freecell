@@ -1,6 +1,8 @@
+import * as S from './style';
+
 import React, { memo } from 'react';
 
-import * as S from './style';
+import Card from '@components/Card';
 
 /**
  * @name FreeCells
@@ -9,7 +11,9 @@ import * as S from './style';
 const FreeCells = () => {
   return (
     <S.FreeCells>
-      <S.FreeCell />
+      <S.FreeCell>
+        <Card name="C1" />
+      </S.FreeCell>
       <S.FreeCell />
       <S.FreeCell />
       <S.FreeCell />

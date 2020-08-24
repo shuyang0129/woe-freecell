@@ -1,3 +1,5 @@
+import * as S from './style';
+
 import ControllButtons from '@components/ControllButtons';
 import FoundationCells from '@components/FoundationCells';
 import FreeCells from '@components/FreeCells';
@@ -5,8 +7,6 @@ import GameInfo from '@components/GameInfo';
 import Logo from '@components/Logo';
 import React from 'react';
 import Tableau from '@components/Tableau';
-
-import * as S from './style';
 
 function Solitaire() {
   return (
