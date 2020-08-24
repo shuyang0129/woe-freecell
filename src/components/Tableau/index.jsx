@@ -9,6 +9,7 @@ const Tableau = () => {
       <S.TableauColumn>
         <Card name="C1" />
         <Card name="C1" />
+        {/* <Card name="C1" />
         <Card name="C1" />
         <Card name="C1" />
         <Card name="C1" />
@@ -27,8 +28,7 @@ const Tableau = () => {
         <Card name="C1" />
         <Card name="C1" />
         <Card name="C1" />
-        <Card name="C1" />
-        <Card name="C1" />
+        <Card name="C1" /> */}
       </S.TableauColumn>
       <S.TableauColumn />
       <S.TableauColumn />
