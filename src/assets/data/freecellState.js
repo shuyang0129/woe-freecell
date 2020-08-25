@@ -2,10 +2,10 @@ import * as suit from '@constants/suits';
 
 export const defaultGameState = {
   freecells: {
-    'freecell-0': null,
-    'freecell-1': null,
-    'freecell-2': null,
-    'freecell-3': null,
+    'freecell-0': [],
+    'freecell-1': [],
+    'freecell-2': [],
+    'freecell-3': [],
   },
   foundationCells: {
     [suit.CLUB]: [],
