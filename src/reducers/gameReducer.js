@@ -22,15 +22,21 @@ export const gameReducer = (state = defaultGameState, action) => {
 
   // 移動至FreeCells
   if (action.type === actionType.MOVE_TO_FREECELLS) {
-    const { targetId, sourceId, cardId } = action.payload;
+    const {
+      targetId, // 目的地位置id
+      sourceId, // 來源位置id
+      cardId, //卡片id
+    } = action.payload;
 
     const gameStateClone = _.cloneDeep(state);
 
-    for (const key in gameStateClone) {
-      if (sourceId in gameStateClone[key]) {
-        const removeIndex = gameStateClone[key][sourceId].indexOf(cardId);
+    for (const cellsType in gameStateClone) {
+      const cellsArea = gameStateClone[cellsType];
+      const isCardLastItem = cellsArea[sourceId].lastIndexOf(cardId) === 0;
+      const isCellEmpty = gameStateClone.freecells.length === 0;
 
-        gameStateClone[key][sourceId].splice(removeIndex, 1);
+      if (sourceId in cellsArea && isCardLastItem && isCellEmpty) {
+        cellsArea[sourceId].pop();
         gameStateClone.freecells[targetId].push(cardId);
         break;
       }
