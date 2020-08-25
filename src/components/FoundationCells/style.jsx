@@ -12,19 +12,20 @@ export const FoundationCells = styled.div`
   flex-flow: row nowrap;
 `;
 
-export const FoundationCell = styled.div`
-  position: relative;
+export const FoundationCell = styled.div.attrs(({ suit }) => ({
+  style: {
+    backgroundImage: `url(${getSuitImg(suit)})`,
+  },
+}))`
+  background-color: rgba(252, 252, 252, 0.6);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 35px 35px;
   border-radius: 5px;
   height: 145px;
   margin-right: 15px;
   position: relative;
   width: 95px;
-  background-color: ${props => props.color};
-  background-color: rgba(252, 252, 252, 0.6);
-  background-image: url(${({ suit }) => getSuitImg(suit)});
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 35px 35px;
 
   &:last-child {
     margin-right: 0;
