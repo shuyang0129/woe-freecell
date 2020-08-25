@@ -8,6 +8,7 @@ export const GameContainer = styled.div`
   height: 100%;
   margin: 0 auto;
   max-width: 1200px;
+  min-width: 993px;
   padding: 0 20px;
   width: 100%;
 `;

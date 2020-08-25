@@ -7,7 +7,6 @@ export const Tableau = styled.main`
   flex: 1 1 0;
   justify-content: space-between;
   margin-bottom: 81px;
-  min-width: 993px;
   padding: 0 20px 30px;
   width: 100%;
 `;
