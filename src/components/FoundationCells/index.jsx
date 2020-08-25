@@ -1,9 +1,7 @@
 import * as S from './style';
 import * as suit from '@constants/suits';
 
-import React, { useEffect, useState } from 'react';
-
-import Card from '@components/Card';
+import React from 'react';
 
 const FoundationCells = () => {
   return (

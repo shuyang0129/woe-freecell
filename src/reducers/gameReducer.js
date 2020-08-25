@@ -1,6 +1,6 @@
 import * as actionType from '@actions/actionTypes';
 
-import { defaultGameState, defaultState } from '@data/freecellState';
+import { defaultGameState } from '@data/freecellState';
 
 import _ from 'lodash';
 import { newGame } from '@utils/freecell';
@@ -76,24 +76,24 @@ export const gameReducer = (state = defaultGameState, action) => {
   return state;
 };
 
-const generateNewGame = code => {
-  // 依據game code，產生新牌局
-  const game = newGame(code);
+// const generateNewGame = code => {
+//   // 依據game code，產生新牌局
+//   const game = newGame(code);
 
-  // 複製gameState，避免直接修改state
-  const gameStateClone = _.cloneDeep(defaultState);
+//   // 複製gameState，避免直接修改state
+//   const gameStateClone = _.cloneDeep(defaultState);
 
-  // 更新game code到state中
-  gameStateClone.gameCode = code;
-  gameStateClone.isGameStarted = true;
+//   // 更新game code到state中
+//   gameStateClone.gameCode = code;
+//   gameStateClone.isGameStarted = true;
 
-  // 將game放到gameState中，對的位置
-  game.forEach((card, index) => {
-    const NUM_OF_TABLEAU_COLUMN = Object.keys(gameStateClone.tableau).length;
-    const columnIndex = index % NUM_OF_TABLEAU_COLUMN;
+//   // 將game放到gameState中，對的位置
+//   game.forEach((card, index) => {
+//     const NUM_OF_TABLEAU_COLUMN = Object.keys(gameStateClone.tableau).length;
+//     const columnIndex = index % NUM_OF_TABLEAU_COLUMN;
 
-    gameStateClone.tableau[`tableauColumn-${columnIndex}`].push(card);
-  });
+//     gameStateClone.tableau[`tableauColumn-${columnIndex}`].push(card);
+//   });
 
-  return gameStateClone;
-};
+//   return gameStateClone;
+// };
