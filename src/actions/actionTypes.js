@@ -1,2 +1,2 @@
-export const INCREMENT = 'INCREMENT';
-export const DECREMENT = 'DECREMENT';
+export const INIT = 'INIT';
+export const NEW_GAME = 'NEW_GAME';
