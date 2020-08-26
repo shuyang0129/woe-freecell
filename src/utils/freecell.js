@@ -30,7 +30,7 @@ const POKER_CARDS = [
  * 運算式來源：{@link https://rosettacode.org/wiki/Deal_cards_for_FreeCell}
  * 新接龍解答(到 gameId: 1000000 都有解)：{@link http://freecellgamesolutions.com/}
  */
-export const newGame = gameId => {
+export const generateNewGame = gameId => {
   const deck = [...POKER_CARDS];
   let seed = gameId;
 
