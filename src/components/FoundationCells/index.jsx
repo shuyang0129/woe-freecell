@@ -1,7 +1,6 @@
 import * as S from './style';
 import * as suit from '@constants/suits';
 
-import Card from '@components/Card';
 import React from 'react';
 
 const FoundationCells = () => {

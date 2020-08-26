@@ -1,6 +1,6 @@
 import * as actionType from '@actions/actionTypes';
 
-import { defaultGameState, defaultState } from '@data/freecellState';
+import { defaultGameState } from '@data/freecellState';
 
 import _ from 'lodash';
 import { newGame } from '@utils/freecell';
@@ -22,15 +22,21 @@ export const gameReducer = (state = defaultGameState, action) => {
 
   // 移動至FreeCells
   if (action.type === actionType.MOVE_TO_FREECELLS) {
-    const { targetId, sourceId, cardId } = action.payload;
+    const {
+      targetId, // 目的地位置id
+      sourceId, // 來源位置id
+      cardId, //卡片id
+    } = action.payload;
 
     const gameStateClone = _.cloneDeep(state);
 
-    for (const key in gameStateClone) {
-      if (sourceId in gameStateClone[key]) {
-        const removeIndex = gameStateClone[key][sourceId].indexOf(cardId);
+    for (const cellsType in gameStateClone) {
+      const cellsArea = gameStateClone[cellsType];
+      const isCardLastItem = cellsArea[sourceId].lastIndexOf(cardId) === 0;
+      const isCellEmpty = gameStateClone.freecells.length === 0;
 
-        gameStateClone[key][sourceId].splice(removeIndex, 1);
+      if (sourceId in cellsArea && isCardLastItem && isCellEmpty) {
+        cellsArea[sourceId].pop();
         gameStateClone.freecells[targetId].push(cardId);
         break;
       }
@@ -70,24 +76,24 @@ export const gameReducer = (state = defaultGameState, action) => {
   return state;
 };
 
-const generateNewGame = code => {
-  // 依據game code，產生新牌局
-  const game = newGame(code);
+// const generateNewGame = code => {
+//   // 依據game code，產生新牌局
+//   const game = newGame(code);
 
-  // 複製gameState，避免直接修改state
-  const gameStateClone = _.cloneDeep(defaultState);
+//   // 複製gameState，避免直接修改state
+//   const gameStateClone = _.cloneDeep(defaultState);
 
-  // 更新game code到state中
-  gameStateClone.gameCode = code;
-  gameStateClone.isGameStarted = true;
+//   // 更新game code到state中
+//   gameStateClone.gameCode = code;
+//   gameStateClone.isGameStarted = true;
 
-  // 將game放到gameState中，對的位置
-  game.forEach((card, index) => {
-    const NUM_OF_TABLEAU_COLUMN = Object.keys(gameStateClone.tableau).length;
-    const columnIndex = index % NUM_OF_TABLEAU_COLUMN;
+//   // 將game放到gameState中，對的位置
+//   game.forEach((card, index) => {
+//     const NUM_OF_TABLEAU_COLUMN = Object.keys(gameStateClone.tableau).length;
+//     const columnIndex = index % NUM_OF_TABLEAU_COLUMN;
 
-    gameStateClone.tableau[`tableauColumn-${columnIndex}`].push(card);
-  });
+//     gameStateClone.tableau[`tableauColumn-${columnIndex}`].push(card);
+//   });
 
-  return gameStateClone;
-};
+//   return gameStateClone;
+// };
