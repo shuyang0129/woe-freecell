@@ -1,8 +1,7 @@
 import * as actionType from '@actions/actionTypes';
 
-import { defaultGameState } from '@data/freecellState';
-
 import _ from 'lodash';
+import { defaultGameState } from '@data/freecellState';
 import { newGame } from '@utils/freecell';
 import { randomNum } from '@utils';
 
@@ -23,20 +22,28 @@ export const gameReducer = (state = defaultGameState, action) => {
   // 移動至FreeCells
   if (action.type === actionType.MOVE_TO_FREECELLS) {
     const {
-      targetId, // 目的地位置id
-      sourceId, // 來源位置id
-      cardId, //卡片id
+      targetId, // 目的地卡片區域id
+      sourceId, // 來源卡片區域id
+      cardId, // 欲移動卡片id
     } = action.payload;
 
     const gameStateClone = _.cloneDeep(state);
 
     for (const cellsType in gameStateClone) {
-      const cellsArea = gameStateClone[cellsType];
-      const isCardLastItem = cellsArea[sourceId].lastIndexOf(cardId) === 0;
-      const isCellEmpty = gameStateClone.freecells.length === 0;
+      // 當前卡片區域
+      const currentCells = gameStateClone[cellsType];
+      // 來源卡片區域
+      const sourcePile = currentCells[sourceId];
+      // 是否為卡片區域中最後一張卡片
+      const isCardLastItem =
+        !!sourcePile && sourcePile.indexOf(cardId) === sourcePile.length - 1;
+      // 目標Freecell區域是否是空的
+      const isPileEmpty = gameStateClone.freecells[targetId].length === 0;
 
-      if (sourceId in cellsArea && isCardLastItem && isCellEmpty) {
-        cellsArea[sourceId].pop();
+      if (sourceId in currentCells && isCardLastItem && isPileEmpty) {
+        // 移除來源卡片
+        sourcePile.pop();
+        // 放進目標Freecell中
         gameStateClone.freecells[targetId].push(cardId);
         break;
       }

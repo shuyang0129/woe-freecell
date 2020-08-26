@@ -8,7 +8,6 @@ const Tableau = () => {
   const tableauData = useSelector(({ game }) => game.tableau);
 
   const renderTableColumns = tableauData => {
-    console.log('renderTableColumns -> tableauData', tableauData);
     return Object.entries(tableauData).map(
       ([tableauColumnId, tableauColumnData]) => {
         return (
