@@ -28,11 +28,7 @@ export const defaultGameState = {
 export const defaultPlayState = {
   moves: 0,
   gameCode: 0,
-  historyMove: [],
+  historyMoves: [],
+  draggingCards: [],
   isGameStarted: false,
-};
-
-export const defaultState = {
-  playState: defaultPlayState,
-  gameState: defaultGameState,
 };
