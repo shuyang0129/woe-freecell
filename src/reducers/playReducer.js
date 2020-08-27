@@ -20,8 +20,7 @@ export const playReducer = (state = defaultPlayState, action) => {
 
   // 增加步數
   if (action.type === actionType.INCREASE_MOVES) {
-    const { moves } = action.payload;
-    return { ...state, moves: moves + 1 };
+    return { ...state, moves: state.moves + 1 };
   }
 
   // 更新遊戲是否開始
@@ -44,6 +43,14 @@ export const playReducer = (state = defaultPlayState, action) => {
 
     // 新增新Game State到目前Game State中
     historyMoves.push(newGameState);
+
+    return { ...state, historyMoves };
+  }
+
+  // 重設歷史紀錄
+  if (action.type === actionType.POP_HISTORY_MOVES) {
+    const historyMoves = _.cloneDeep(state.historyMoves);
+    historyMoves.pop();
 
     return { ...state, historyMoves };
   }

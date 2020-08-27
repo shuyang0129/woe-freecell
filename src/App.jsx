@@ -1,7 +1,12 @@
 import React from 'react';
 import Solitaire from '@pages/Solitaire';
 import { useDispatch } from 'react-redux';
-import { startNewGame, moveToFreecell } from './actions/gameAction';
+import {
+  startNewGame,
+  moveToFreecell,
+  resetGame,
+  undoGameState,
+} from './actions/gameAction';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -23,6 +28,7 @@ const App = () => {
       sourceType: 'tableau',
     }),
   );
+  dispatch(undoGameState());
 
   return <Solitaire />;
 };

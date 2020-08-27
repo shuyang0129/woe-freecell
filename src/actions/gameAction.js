@@ -2,7 +2,18 @@ import _ from 'lodash';
 import { generateNewGame } from '@utils/freecell';
 import { randomNum } from '@utils';
 
+import {
+  initPlay,
+  increaseMoves,
+  updateGameCode,
+  addHistoryMoves,
+  popHistoryMoves,
+} from './playAction';
 import { INIT_GAME, UPDATE_GAME } from './actionTypes';
+
+export const initGame = () => ({
+  type: INIT_GAME,
+});
 
 /**
  * @name startNewGame
@@ -10,11 +21,14 @@ import { INIT_GAME, UPDATE_GAME } from './actionTypes';
  * @description 開始新牌局
  */
 export const startNewGame = gameCode => (dispatch, getState) => {
-  // 1) 初始化遊戲狀態
-  dispatch({ type: INIT_GAME });
+  // 1) 初始化State
+  dispatch(initPlay());
+  dispatch(initGame());
 
   // 2) 取得game code或隨機產生
   const code = gameCode === undefined ? randomNum(1000000) : gameCode;
+  // 2-1) 更新State => 紀錄Game Code
+  dispatch(updateGameCode(code));
 
   // 3) 產生牌局
   const game = generateNewGame(code);
@@ -32,7 +46,12 @@ export const startNewGame = gameCode => (dispatch, getState) => {
   });
 
   // 6) 更新牌局
-  dispatch(updateGame(newGameState));
+  dispatch(updateGameState(newGameState));
+};
+
+export const resetGame = () => (dispatch, getState) => {
+  const { gameCode } = getState().play;
+  dispatch(startNewGame(gameCode));
 };
 
 /**
@@ -76,9 +95,40 @@ export const moveToFreecell = ({ cardId, targetId, sourceId, sourceType }) => (
   }
 
   // 4) 更新牌局
-  dispatch(updateGame(newGameState));
+  dispatch(updateGameState(newGameState));
 };
 
-const updateGame = newGameState => dispatch => {
+/**
+ * @name undoGameState
+ * @description 回到上一個Game State
+ */
+export const undoGameState = () => (dispatch, getState) => {
+  // 1) 移除最後一筆歷史紀錄
+  dispatch(popHistoryMoves());
+  // 2) 取得更新後的歷史紀錄的最後一筆
+  const { historyMoves } = getState().play;
+  const lastGameState = historyMoves[historyMoves.length - 1];
+  const newGameState = _.cloneDeep(lastGameState);
+  // 3) 更新Game State，但不新增歷程
+  dispatch(updateGameState(newGameState, false));
+};
+
+/**
+ * @name updateGameState
+ * @param {Object} newGameState 欲更新的Game State
+ * @param {Boolean} addHistory 是否要加進歷史紀錄中
+ * @description
+ * 更新Game State，多一個非必要參數用來忽略加入歷史紀錄這個行為
+ * 比方說回復上一步的時候，不需要將這個動作加入歷史紀錄
+ */
+export const updateGameState = (
+  newGameState,
+  addHistory = true,
+) => dispatch => {
+  // 1) 更新Game State
   dispatch({ type: UPDATE_GAME, payload: { newGameState } });
+  // 2) 新增步數
+  dispatch(increaseMoves());
+  // 3) 新增至歷史紀錄
+  if (addHistory) dispatch(addHistoryMoves(newGameState));
 };
