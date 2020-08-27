@@ -66,9 +66,6 @@ export const moveToFreecell = ({ cardId, targetId, sourceId, sourceType }) => (
   dispatch,
   getState,
 ) => {
-  // 資訊不足，不處理
-  if (!cardId || !sourceId || !targetId || !sourceType) return;
-
   // 1) 取得目前牌局
   const { game: gameState } = getState();
 
@@ -104,8 +101,6 @@ export const moveToFreecell = ({ cardId, targetId, sourceId, sourceType }) => (
 //   sourceId,
 //   sourceType,
 // }) => (dispatch, getState) => {
-//   // 資訊不足，不處理
-//   if (!cardId || !sourceId || !targetId || !sourceType) return;
 
 //   // 1) 取得目前牌局
 //   const { game: gameState } = getState();
