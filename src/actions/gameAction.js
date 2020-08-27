@@ -98,6 +98,42 @@ export const moveToFreecell = ({ cardId, targetId, sourceId, sourceType }) => (
   dispatch(updateGameState(newGameState));
 };
 
+// export const moveToFoundationCell = ({
+//   cardId,
+//   targetId,
+//   sourceId,
+//   sourceType,
+// }) => (dispatch, getState) => {
+//   // 資訊不足，不處理
+//   if (!cardId || !sourceId || !targetId || !sourceType) return;
+
+//   // 1) 取得目前牌局
+//   const { game: gameState } = getState();
+
+//   // 2) 複製目前state
+//   const newGameState = _.cloneDeep(gameState);
+
+//   // 3) 移動卡片
+//   const sourceCells = newGameState[sourceType][sourceId];
+//   const targetCells = newGameState.foundationCells[targetId];
+
+//   // 3-1) 確認前提
+//   // 確認：卡片是FoundationCell需要的卡片(牌色、大小)
+//   const suitCode = targetId[0];
+//   // const cardNum = targetCells.length < 13 ? targetCells.length + 1 :
+//   const correctCardId = `${suitCode}${targetCells.length}`;
+
+//   // 確認：目的地位置有沒有這張卡片
+//   const isCardExist = sourceCells.includes(cardId);
+//   // 確認：卡片是否為目的地位置最後一張牌
+//   const isCardLastItem =
+//     isCardExist && sourceCells.indexOf(cardId) === sourceCells.length - 1;
+
+//   // 3-2) 移除來源卡片
+
+//   // 3-3) 將卡片加入目標區域
+// };
+
 /**
  * @name undoGameState
  * @description 回到上一個Game State
