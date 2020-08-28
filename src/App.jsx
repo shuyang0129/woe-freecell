@@ -1,12 +1,14 @@
+import {
+  moveToFoundationCell,
+  moveToFreecell,
+  resetGame,
+  startNewGame,
+  undoGameState,
+} from './actions/gameAction';
+
 import React from 'react';
 import Solitaire from '@pages/Solitaire';
 import { useDispatch } from 'react-redux';
-import {
-  startNewGame,
-  moveToFreecell,
-  resetGame,
-  undoGameState,
-} from './actions/gameAction';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -28,7 +30,31 @@ const App = () => {
       sourceType: 'tableau',
     }),
   );
-  dispatch(undoGameState());
+  // dispatch(undoGameState());
+  dispatch(
+    moveToFoundationCell({
+      targetId: 'CLUB',
+      sourceId: 'tableauColumn-5',
+      cardId: 'C1',
+      sourceType: 'tableau',
+    }),
+  );
+  dispatch(
+    moveToFoundationCell({
+      targetId: 'SPADE',
+      sourceId: 'tableauColumn-5',
+      cardId: 'S1',
+      sourceType: 'tableau',
+    }),
+  );
+  dispatch(
+    moveToFoundationCell({
+      targetId: 'CLUB',
+      sourceId: 'freecell-1',
+      cardId: 'C2',
+      sourceType: 'freecells',
+    }),
+  );
 
   return <Solitaire />;
 };

@@ -1,15 +1,15 @@
+import { INIT_GAME, UPDATE_GAME } from './actionTypes';
+import {
+  addHistoryMoves,
+  increaseMoves,
+  initPlay,
+  popHistoryMoves,
+  updateGameCode,
+} from './playAction';
+
 import _ from 'lodash';
 import { generateNewGame } from '@utils/freecell';
 import { randomNum } from '@utils';
-
-import {
-  initPlay,
-  increaseMoves,
-  updateGameCode,
-  addHistoryMoves,
-  popHistoryMoves,
-} from './playAction';
-import { INIT_GAME, UPDATE_GAME } from './actionTypes';
 
 export const initGame = () => ({
   type: INIT_GAME,
@@ -95,39 +95,47 @@ export const moveToFreecell = ({ cardId, targetId, sourceId, sourceType }) => (
   dispatch(updateGameState(newGameState));
 };
 
-// export const moveToFoundationCell = ({
-//   cardId,
-//   targetId,
-//   sourceId,
-//   sourceType,
-// }) => (dispatch, getState) => {
+export const moveToFoundationCell = ({
+  cardId,
+  targetId,
+  sourceId,
+  sourceType,
+}) => (dispatch, getState) => {
+  // 1) 取得目前牌局
+  const { game: gameState } = getState();
 
-//   // 1) 取得目前牌局
-//   const { game: gameState } = getState();
+  // 2) 複製目前state
+  const newGameState = _.cloneDeep(gameState);
 
-//   // 2) 複製目前state
-//   const newGameState = _.cloneDeep(gameState);
+  // 3) 移動卡片
+  const sourceCells = newGameState[sourceType][sourceId];
+  const targetCells = newGameState.foundationCells[targetId];
 
-//   // 3) 移動卡片
-//   const sourceCells = newGameState[sourceType][sourceId];
-//   const targetCells = newGameState.foundationCells[targetId];
+  // 3-0) 如果FoundationCells已經滿了，不做其他動作
+  if (targetCells.length >= 13) return;
 
-//   // 3-1) 確認前提
-//   // 確認：卡片是FoundationCell需要的卡片(牌色、大小)
-//   const suitCode = targetId[0];
-//   // const cardNum = targetCells.length < 13 ? targetCells.length + 1 :
-//   const correctCardId = `${suitCode}${targetCells.length}`;
+  // 3-1) 確認前提
+  // 確認：卡片是FoundationCell需要的卡片(牌色、大小)
+  const suitCode = targetId[0];
+  const cardNum = targetCells.length + 1;
+  const correctCardId = `${suitCode}${cardNum}`;
+  const isCardCorrect = cardId === correctCardId;
 
-//   // 確認：目的地位置有沒有這張卡片
-//   const isCardExist = sourceCells.includes(cardId);
-//   // 確認：卡片是否為目的地位置最後一張牌
-//   const isCardLastItem =
-//     isCardExist && sourceCells.indexOf(cardId) === sourceCells.length - 1;
+  // 確認：目的地位置有沒有這張卡片
+  const isCardExist = sourceCells.includes(cardId);
+  // 確認：卡片是否為目的地位置最後一張牌
+  const isCardLastItem =
+    isCardExist && sourceCells.indexOf(cardId) === sourceCells.length - 1;
 
-//   // 3-2) 移除來源卡片
+  // 3-2) 移除來源卡片;將卡片加入目標區域
+  if (isCardCorrect && isCardExist && isCardLastItem) {
+    sourceCells.pop();
+    targetCells.push(cardId);
+  }
 
-//   // 3-3) 將卡片加入目標區域
-// };
+  // 3-3) 更新牌局
+  dispatch(updateGameState(newGameState));
+};
 
 /**
  * @name undoGameState

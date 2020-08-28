@@ -1,18 +1,29 @@
 import * as S from './style';
-import * as suit from '@constants/suits';
 
 import React from 'react';
+import { renderCards } from '@utils/renderCard';
+import { useSelector } from 'react-redux';
 
 const FoundationCells = () => {
+  //FoundationCell裡面的全部資訊
+  const foundationCellsData = useSelector(({ game }) => game.foundationCells);
+
+  // 渲染各個FoundationCell
+  const renderEachFoundationCell = foundationCellsData => {
+    return Object.entries(foundationCellsData).map(
+      ([foundationCellId, foundationCellCards]) => {
+        return (
+          <S.FoundationCell key={foundationCellId} suit={foundationCellId}>
+            {renderCards(foundationCellCards)}
+          </S.FoundationCell>
+        );
+      },
+    );
+  };
+
   return (
     <S.FoundationCells>
-      <S.FoundationCell suit={suit.SPADE}>
-        {/* <Card name="C1" />
-        <Card name="C2" /> */}
-      </S.FoundationCell>
-      <S.FoundationCell suit={suit.HEART} />
-      <S.FoundationCell suit={suit.DIAMOND} />
-      <S.FoundationCell suit={suit.CLUB} />
+      {renderEachFoundationCell(foundationCellsData)}
     </S.FoundationCells>
   );
 };
