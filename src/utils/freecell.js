@@ -44,3 +44,44 @@ export const generateNewGame = gameId => {
 
   return deck.reverse();
 };
+
+/**
+ * @name checkIsCardBlack
+ * @param {String} card 卡片ID，ex: 'C1', 'H3'
+ * @description 根據卡片ID，判斷是否花色為黑
+ * @example checkIsCardBlack('H3') => false
+ * @example checkIsCardBlack('C3') => true
+ * @return Boolean
+ */
+export const checkIsCardBlack = card => {
+  const cardsInBlack = new Set(['C', 'S']);
+  return cardsInBlack.has(card[0]);
+};
+
+/**
+ * @name checkIsValidSequence
+ * @param {Array} cards 包含多張卡片ID的陣列，ex: ['H8', 'S7', 'D4']
+ * @description 卡片是否為有效的排序（黑紅相間&&遞減數字）
+ * @example checkIsValidSequence(['H8', 'S7', 'D4']) => false
+ * @example checkIsValidSequence(['H8', 'S7', 'D6']) => true
+ * @returns Boolean
+ */
+export const checkIsValidSequence = cards => {
+  let isCardBlack = checkIsCardBlack(cards[0]);
+  let cardNum = parseInt(cards[0].substr(1));
+
+  // 如果排序小於數字1，回傳false
+  if (cardNum < 1) return false;
+
+  for (const card of cards) {
+    const isValidColor = checkIsCardBlack(card) === isCardBlack;
+    const isValidNum = parseInt(card.substr(1)) === cardNum;
+
+    if (!isValidColor || !isValidNum) return false;
+
+    isCardBlack = !isCardBlack;
+    cardNum--;
+  }
+
+  return true;
+};
