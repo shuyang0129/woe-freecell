@@ -1,9 +1,10 @@
 import {
   moveToFoundationCell,
   moveToFreecell,
-  resetGame,
+  restartGame,
   startNewGame,
   undoGameState,
+  moveToTableau,
 } from './actions/gameAction';
 
 import React from 'react';
@@ -30,7 +31,6 @@ const App = () => {
       sourceType: 'tableau',
     }),
   );
-  // dispatch(undoGameState());
   dispatch(
     moveToFoundationCell({
       targetId: 'CLUB',
@@ -51,10 +51,36 @@ const App = () => {
     moveToFoundationCell({
       targetId: 'CLUB',
       sourceId: 'freecell-1',
-      cardId: 'C2',
+      cardId: 'C3',
       sourceType: 'freecells',
     }),
   );
+  dispatch(
+    moveToFreecell({
+      targetId: 'freecell-2',
+      sourceId: 'tableauColumn-6',
+      cardId: 'C8',
+      sourceType: 'tableau',
+    }),
+  );
+  dispatch(
+    moveToTableau({
+      targetId: 'tableauColumn-6',
+      sourceId: 'tableauColumn-7',
+      cardId: 'C10',
+      sourceType: 'tableau',
+    }),
+  );
+  dispatch(
+    moveToTableau({
+      targetId: 'tableauColumn-5',
+      sourceId: 'tableauColumn-6',
+      cardId: 'H11',
+      sourceType: 'tableau',
+    }),
+  );
+  // dispatch(undoGameState());
+  // dispatch(restartGame());
 
   return <Solitaire />;
 };
