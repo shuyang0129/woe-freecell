@@ -8,7 +8,7 @@ import {
 } from './playAction';
 
 import _ from 'lodash';
-import { generateNewGame } from '@utils/freecell';
+import { generateNewGame, checkIsValidSequence } from '@utils/freecell';
 import { randomNum } from '@utils';
 
 export const initGame = () => ({
@@ -49,7 +49,7 @@ export const startNewGame = gameCode => (dispatch, getState) => {
   dispatch(updateGameState(newGameState));
 };
 
-export const resetGame = () => (dispatch, getState) => {
+export const restartGame = () => (dispatch, getState) => {
   const { gameCode } = getState().play;
   dispatch(startNewGame(gameCode));
 };
@@ -89,12 +89,19 @@ export const moveToFreecell = ({ cardId, targetId, sourceId, sourceType }) => (
   if (isFreecellEmpty && isCardExist && isCardLastItem) {
     sourceCells.pop();
     targetCells.push(cardId);
+    // 4) 更新牌局
+    dispatch(updateGameState(newGameState));
   }
-
-  // 4) 更新牌局
-  dispatch(updateGameState(newGameState));
 };
 
+/**
+ * @name moveToFreecell
+ * @param {String} cardId 想要移動的卡片ID，ex: 'C3'
+ * @param {String} targetId 目的地卡片區域ID，ex: 'CLUB'
+ * @param {String} sourceId 來源卡片區域ID，ex: 'freecell'
+ * @param {String} sourceType 來源卡片類別ID，ex: 'freecells'
+ * @description 移動卡片到FoundationCells區域
+ */
 export const moveToFoundationCell = ({
   cardId,
   targetId,
@@ -131,9 +138,51 @@ export const moveToFoundationCell = ({
   if (isCardCorrect && isCardExist && isCardLastItem) {
     sourceCells.pop();
     targetCells.push(cardId);
+    // 3-3) 更新牌局
+    dispatch(updateGameState(newGameState));
   }
+};
 
-  // 3-3) 更新牌局
+/**
+ * @name moveToFreecell
+ * @param {String} cardId 想要移動的卡片ID，ex: 'C3'
+ * @param {String} targetId 目的地卡片區域ID，ex: 'tableauColumn-0'
+ * @param {String} sourceId 來源卡片區域ID，ex: 'freecell'
+ * @param {String} sourceType 來源卡片類別ID，ex: 'freecells'
+ * @description 移動卡片到Tableau區域
+ */
+export const moveToTableau = ({ cardId, targetId, sourceId, sourceType }) => (
+  dispatch,
+  getState,
+) => {
+  console.log({ cardId, targetId, sourceId, sourceType });
+  // 1) 取得目前牌局
+  const { game: gameState } = getState();
+
+  // 2) 複製目前state
+  const newGameState = _.cloneDeep(gameState);
+
+  const sourceCells = newGameState[sourceType][sourceId];
+  const targetCells = newGameState.tableau[targetId];
+
+  // 3) 確認前提
+  // 3-1) [確認]卡片存在
+  // 先取得卡片Index
+  const sourceCardIndex = sourceCells.indexOf(cardId);
+  // 如果不存在這張卡片，不做任何事
+  if (sourceCardIndex < 0) return;
+
+  //  3-2) [確認]有效排序（花色應該要相間、數字應該要遞減排序）
+  // 取得移動中卡片們(這個情況可能多張)
+  const movingCards = sourceCells.slice(sourceCardIndex);
+  // 如果移動中的卡片是無效的排序，不做任何事
+  if (!checkIsValidSequence(movingCards)) return;
+
+  // 4) 移除來源卡片;將卡片加入目標區域
+  sourceCells.splice(sourceCardIndex, movingCards.length);
+  targetCells.push(...movingCards);
+
+  // 5) 更新牌局
   dispatch(updateGameState(newGameState));
 };
 
