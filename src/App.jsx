@@ -8,46 +8,49 @@ import {
   findPossibleMove,
 } from './actions/gameAction';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import Solitaire from '@pages/Solitaire';
 import { useDispatch } from 'react-redux';
 
 const App = () => {
   const dispatch = useDispatch();
 
-  dispatch(startNewGame(1));
-  dispatch(
-    moveToFreeCell({
-      targetId: 'freeCell-0',
-      sourceId: 'tableauColumn-5',
-      cardId: 'D3',
-      sourceType: 'tableau',
-    }),
-  );
-  dispatch(
-    moveToFreeCell({
-      targetId: 'freeCell-1',
-      sourceId: 'tableauColumn-5',
-      cardId: 'C2',
-      sourceType: 'tableau',
-    }),
-  );
-  dispatch(
-    moveToFoundationCell({
-      targetId: 'CLUB',
-      sourceId: 'tableauColumn-5',
-      cardId: 'C1',
-      sourceType: 'tableau',
-    }),
-  );
-  dispatch(
-    moveToFoundationCell({
-      targetId: 'SPADE',
-      sourceId: 'tableauColumn-5',
-      cardId: 'S1',
-      sourceType: 'tableau',
-    }),
-  );
+  useEffect(() => {
+    dispatch(startNewGame(1));
+    dispatch(
+      moveToFreeCell({
+        targetId: 'freeCell-0',
+        sourceId: 'tableauColumn-5',
+        cardId: 'D3',
+        sourceType: 'tableau',
+      }),
+    );
+    dispatch(
+      moveToFreeCell({
+        targetId: 'freeCell-1',
+        sourceId: 'tableauColumn-5',
+        cardId: 'C2',
+        sourceType: 'tableau',
+      }),
+    );
+  }, [dispatch]);
+
+  // dispatch(
+  //   moveToFoundationCell({
+  //     targetId: 'CLUB',
+  //     sourceId: 'tableauColumn-5',
+  //     cardId: 'C1',
+  //     sourceType: 'tableau',
+  //   }),
+  // );
+  // dispatch(
+  //   moveToFoundationCell({
+  //     targetId: 'SPADE',
+  //     sourceId: 'tableauColumn-5',
+  //     cardId: 'S1',
+  //     sourceType: 'tableau',
+  //   }),
+  // );
   // dispatch(
   //   moveToFoundationCell({
   //     targetId: 'CLUB',
@@ -64,14 +67,14 @@ const App = () => {
   //     sourceType: 'tableau',
   //   }),
   // );
-  dispatch(
-    moveToFreeCell({
-      targetId: 'freeCell-2',
-      sourceId: 'tableauColumn-5',
-      cardId: 'C12',
-      sourceType: 'tableau',
-    }),
-  );
+  // dispatch(
+  //   moveToFreeCell({
+  //     targetId: 'freeCell-2',
+  //     sourceId: 'tableauColumn-5',
+  //     cardId: 'C12',
+  //     sourceType: 'tableau',
+  //   }),
+  // );
   // dispatch(
   //   moveToFreeCell({
   //     targetId: 'freeCell-3',

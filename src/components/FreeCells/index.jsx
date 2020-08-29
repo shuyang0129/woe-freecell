@@ -1,9 +1,8 @@
-import * as S from './style';
-
-import React, { memo } from 'react';
-
 import { renderCards } from '@utils/renderCard';
 import { useSelector } from 'react-redux';
+import React, { memo } from 'react';
+
+import * as S from './style';
 
 /**
  * @name FreeCells
