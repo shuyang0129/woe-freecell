@@ -1,15 +1,18 @@
 import { INIT_GAME, UPDATE_GAME } from './actionTypes';
+
 import {
   addHistoryMoves,
   increaseMoves,
   initPlay,
   popHistoryMoves,
   updateGameCode,
+  updatePossibleMove,
 } from './playAction';
 
 import _ from 'lodash';
-import { generateNewGame, checkIsValidSequence } from '@utils/freecell';
+import { generateNewGame, checkIsValidSequence, possibleMoveToFreeCells } from '@utils/freecell';
 import { randomNum } from '@utils';
+import { possibleMoveToFoundationCells, possibleMoveToTableau } from '../utils/freecell';
 
 export const initGame = () => ({
   type: INIT_GAME,
@@ -82,8 +85,7 @@ export const moveToFreecell = ({ cardId, targetId, sourceId, sourceType }) => (
   // 3-2) 確認：目的地位置有沒有這張卡片
   const isCardExist = sourceCells.includes(cardId);
   // 3-3) 確認：卡片是否為目的地位置最後一張牌
-  const isCardLastItem =
-    isCardExist && sourceCells.indexOf(cardId) === sourceCells.length - 1;
+  const isCardLastItem = isCardExist && sourceCells.indexOf(cardId) === sourceCells.length - 1;
 
   // 3-4) 上述條件成立，[移除]來源位置的卡片；[新增]目的地位置卡片
   if (isFreecellEmpty && isCardExist && isCardLastItem) {
@@ -102,12 +104,10 @@ export const moveToFreecell = ({ cardId, targetId, sourceId, sourceType }) => (
  * @param {String} sourceType 來源卡片類別ID，ex: 'freecells'
  * @description 移動卡片到FoundationCells區域
  */
-export const moveToFoundationCell = ({
-  cardId,
-  targetId,
-  sourceId,
-  sourceType,
-}) => (dispatch, getState) => {
+export const moveToFoundationCell = ({ cardId, targetId, sourceId, sourceType }) => (
+  dispatch,
+  getState,
+) => {
   // 1) 取得目前牌局
   const { game: gameState } = getState();
 
@@ -131,8 +131,7 @@ export const moveToFoundationCell = ({
   // 確認：目的地位置有沒有這張卡片
   const isCardExist = sourceCells.includes(cardId);
   // 確認：卡片是否為目的地位置最後一張牌
-  const isCardLastItem =
-    isCardExist && sourceCells.indexOf(cardId) === sourceCells.length - 1;
+  const isCardLastItem = isCardExist && sourceCells.indexOf(cardId) === sourceCells.length - 1;
 
   // 3-2) 移除來源卡片;將卡片加入目標區域
   if (isCardCorrect && isCardExist && isCardLastItem) {
@@ -155,7 +154,6 @@ export const moveToTableau = ({ cardId, targetId, sourceId, sourceType }) => (
   dispatch,
   getState,
 ) => {
-  console.log({ cardId, targetId, sourceId, sourceType });
   // 1) 取得目前牌局
   const { game: gameState } = getState();
 
@@ -209,14 +207,33 @@ export const undoGameState = () => (dispatch, getState) => {
  * 更新Game State，多一個非必要參數用來忽略加入歷史紀錄這個行為
  * 比方說回復上一步的時候，不需要將這個動作加入歷史紀錄
  */
-export const updateGameState = (
-  newGameState,
-  addHistory = true,
-) => dispatch => {
+export const updateGameState = (newGameState, addHistory = true) => dispatch => {
   // 1) 更新Game State
   dispatch({ type: UPDATE_GAME, payload: { newGameState } });
   // 2) 新增步數
   dispatch(increaseMoves());
   // 3) 新增至歷史紀錄
   if (addHistory) dispatch(addHistoryMoves(newGameState));
+  // 4) 更新可移動路徑，如果沒有步數可以用來宣告遊戲結束
+  dispatch(findPossibleMove());
+};
+
+/**
+ * @name findPossibleMove
+ * @description 搜尋可移動的路徑，優先順序為：1.FoundationCells 2.Tableau 3.FreeCells
+ */
+export const findPossibleMove = () => (dispatch, getState) => {
+  let possibleMove = null;
+
+  const { game: gameState } = getState();
+  const newGameState = _.cloneDeep(gameState);
+
+  // 1) 先找，到FoundationCells的可能路徑
+  if (!possibleMove) possibleMove = possibleMoveToFoundationCells(newGameState);
+  // 2) 再找，到Tableau的可能路徑
+  if (!possibleMove) possibleMove = possibleMoveToTableau(newGameState);
+  // 3) 最後找，到FreeCells的可能路徑
+  if (!possibleMove) possibleMove = possibleMoveToFreeCells(newGameState);
+
+  dispatch(updatePossibleMove(possibleMove));
 };

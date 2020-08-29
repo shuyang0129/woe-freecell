@@ -5,6 +5,7 @@ import {
   startNewGame,
   undoGameState,
   moveToTableau,
+  findPossibleMove,
 } from './actions/gameAction';
 
 import React from 'react';
@@ -47,40 +48,65 @@ const App = () => {
       sourceType: 'tableau',
     }),
   );
-  dispatch(
-    moveToFoundationCell({
-      targetId: 'CLUB',
-      sourceId: 'freecell-1',
-      cardId: 'C3',
-      sourceType: 'freecells',
-    }),
-  );
+  // dispatch(
+  //   moveToFoundationCell({
+  //     targetId: 'CLUB',
+  //     sourceId: 'freecell-1',
+  //     cardId: 'C2',
+  //     sourceType: 'freecells',
+  //   }),
+  // );
+  // dispatch(
+  //   moveToFreecell({
+  //     targetId: 'freecell-2',
+  //     sourceId: 'tableauColumn-6',
+  //     cardId: 'C8',
+  //     sourceType: 'tableau',
+  //   }),
+  // );
   dispatch(
     moveToFreecell({
       targetId: 'freecell-2',
-      sourceId: 'tableauColumn-6',
-      cardId: 'C8',
+      sourceId: 'tableauColumn-5',
+      cardId: 'C12',
       sourceType: 'tableau',
     }),
   );
-  dispatch(
-    moveToTableau({
-      targetId: 'tableauColumn-6',
-      sourceId: 'tableauColumn-7',
-      cardId: 'C10',
-      sourceType: 'tableau',
-    }),
-  );
-  dispatch(
-    moveToTableau({
-      targetId: 'tableauColumn-5',
-      sourceId: 'tableauColumn-6',
-      cardId: 'H11',
-      sourceType: 'tableau',
-    }),
-  );
+  // dispatch(
+  //   moveToFreecell({
+  //     targetId: 'freecell-3',
+  //     sourceId: 'tableauColumn-5',
+  //     cardId: 'H7',
+  //     sourceType: 'tableau',
+  //   }),
+  // );
+  // dispatch(
+  //   moveToFreecell({
+  //     targetId: 'freecell-2',
+  //     sourceId: 'tableauColumn-6',
+  //     cardId: 'C8',
+  //     sourceType: 'tableau',
+  //   }),
+  // );
+  // dispatch(
+  //   moveToTableau({
+  //     targetId: 'tableauColumn-6',
+  //     sourceId: 'tableauColumn-7',
+  //     cardId: 'C10',
+  //     sourceType: 'tableau',
+  //   }),
+  // );
+  // dispatch(
+  //   moveToTableau({
+  //     targetId: 'tableauColumn-5',
+  //     sourceId: 'tableauColumn-6',
+  //     cardId: 'H11',
+  //     sourceType: 'tableau',
+  //   }),
+  // );
   // dispatch(undoGameState());
   // dispatch(restartGame());
+  // dispatch(findPossibleMove());
 
   return <Solitaire />;
 };

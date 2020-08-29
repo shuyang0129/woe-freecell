@@ -65,5 +65,11 @@ export const playReducer = (state = defaultPlayState, action) => {
     return { ...state, draggingCards: [] };
   }
 
+  // 重設拖曳中牌組
+  if (action.type === actionType.UPDATE_POSSIBLE_MOVE) {
+    const { possibleMove } = action.payload;
+    return { ...state, possibleMove };
+  }
+
   return state;
 };

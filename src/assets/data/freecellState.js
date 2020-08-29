@@ -30,5 +30,6 @@ export const defaultPlayState = {
   gameCode: 0,
   historyMoves: [],
   draggingCards: [],
+  possibleMove: null,
   isGameStarted: false,
 };

@@ -48,3 +48,9 @@ export const updateDraggingCards = draggingCards => ({
 export const resetDraggingCards = () => ({
   type: actionType.RESET_DRAGGING_CARDS,
 });
+
+// 更新Possible Moves
+export const updatePossibleMove = possibleMove => ({
+  type: actionType.UPDATE_POSSIBLE_MOVE,
+  payload: { possibleMove },
+});
