@@ -131,8 +131,8 @@ export const getNumberFromCard = card => {
  * cardId => 可以移動的卡片ID，ex: 'C2'
  * targetId => 目標區域中Cell的ID，ex: CLUB
  * targetType => 哪個目標區域，ex: foundationCells
- * sourceId => 來源區域中Cell的ID，ex: freecell-1
- * sourceType => 哪個來源區域，ex: freecells
+ * sourceId => 來源區域中Cell的ID，ex: freeCell-1
+ * sourceType => 哪個來源區域，ex: freeCells
  */
 export const possibleMoveToFoundationCells = gameState => {
   // 預設沒有possible move
@@ -174,13 +174,13 @@ export const possibleMoveToFoundationCells = gameState => {
   });
 
   // 1-3) 再來從FreeCells中，找有沒有FoundationCells需要的牌
-  Object.entries(newGameState.freecells).forEach(([freecellId, freecellCards]) => {
+  Object.entries(newGameState.freeCells).forEach(([freeCellId, freeCellCards]) => {
     // 如果找到了，就不用再執行接下來的程式碼
     if (!!possibleMove) return;
     // 如果freecell是空的，返回不做事
-    if (freecellCards.length === 0) return;
+    if (freeCellCards.length === 0) return;
 
-    const currentFreecellCard = freecellCards[0];
+    const currentFreecellCard = freeCellCards[0];
 
     const indexInNeeds = foundationCellsNeeds.indexOf(currentFreecellCard);
 
@@ -189,7 +189,7 @@ export const possibleMoveToFoundationCells = gameState => {
         cardId: currentFreecellCard,
         targetId: getSuitNameFromCard(foundationCellsNeeds[indexInNeeds]),
         targetType: cells.FOUNDATION_CELLS,
-        sourceId: freecellId,
+        sourceId: freeCellId,
         sourceType: cells.FREE_CELLS,
       });
     }
@@ -289,12 +289,12 @@ export const possibleMoveToFreeCells = gameState => {
   });
 
   // 3-1) 取出每個Freecell的卡片
-  Object.entries(newGameState.freecells).forEach(([freecellId, freecellCards]) => {
+  Object.entries(newGameState.freeCells).forEach(([freeCellId, freeCellCards]) => {
     // 如果找到了，就不用再執行接下來的程式碼
     if (!!possibleMove) return;
 
     // 如果Freecell有空位，因為可以接受任何一張牌，回傳第一張找到的牌
-    const len = freecellCards.length;
+    const len = freeCellCards.length;
     if (len === 0) {
       Object.entries(everyLastCardInTableauColumn).forEach(([matchedId, matchedCard]) => {
         // 如果找到了，就不用再執行接下來的程式碼
@@ -303,7 +303,7 @@ export const possibleMoveToFreeCells = gameState => {
         if (!!matchedCard) {
           return (possibleMove = {
             cardId: matchedCard,
-            targetId: freecellId,
+            targetId: freeCellId,
             targetType: cells.FREE_CELLS,
             sourceId: matchedId,
             sourceType: cells.TABLEAU,

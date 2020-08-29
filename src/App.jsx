@@ -1,6 +1,6 @@
 import {
   moveToFoundationCell,
-  moveToFreecell,
+  moveToFreeCell,
   restartGame,
   startNewGame,
   undoGameState,
@@ -17,16 +17,16 @@ const App = () => {
 
   dispatch(startNewGame(1));
   dispatch(
-    moveToFreecell({
-      targetId: 'freecell-0',
+    moveToFreeCell({
+      targetId: 'freeCell-0',
       sourceId: 'tableauColumn-5',
       cardId: 'D3',
       sourceType: 'tableau',
     }),
   );
   dispatch(
-    moveToFreecell({
-      targetId: 'freecell-1',
+    moveToFreeCell({
+      targetId: 'freeCell-1',
       sourceId: 'tableauColumn-5',
       cardId: 'C2',
       sourceType: 'tableau',
@@ -51,38 +51,38 @@ const App = () => {
   // dispatch(
   //   moveToFoundationCell({
   //     targetId: 'CLUB',
-  //     sourceId: 'freecell-1',
+  //     sourceId: 'freeCell-1',
   //     cardId: 'C2',
-  //     sourceType: 'freecells',
+  //     sourceType: 'freeCells',
   //   }),
   // );
   // dispatch(
   //   moveToFreecell({
-  //     targetId: 'freecell-2',
+  //     targetId: 'freeCell-2',
   //     sourceId: 'tableauColumn-6',
   //     cardId: 'C8',
   //     sourceType: 'tableau',
   //   }),
   // );
   dispatch(
-    moveToFreecell({
-      targetId: 'freecell-2',
+    moveToFreeCell({
+      targetId: 'freeCell-2',
       sourceId: 'tableauColumn-5',
       cardId: 'C12',
       sourceType: 'tableau',
     }),
   );
   // dispatch(
-  //   moveToFreecell({
-  //     targetId: 'freecell-3',
+  //   moveToFreeCell({
+  //     targetId: 'freeCell-3',
   //     sourceId: 'tableauColumn-5',
   //     cardId: 'H7',
   //     sourceType: 'tableau',
   //   }),
   // );
   // dispatch(
-  //   moveToFreecell({
-  //     targetId: 'freecell-2',
+  //   moveToFreeCell({
+  //     targetId: 'freeCell-2',
   //     sourceId: 'tableauColumn-6',
   //     cardId: 'C8',
   //     sourceType: 'tableau',

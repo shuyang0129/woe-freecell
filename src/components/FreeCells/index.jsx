@@ -11,18 +11,16 @@ import { useSelector } from 'react-redux';
  */
 const FreeCells = () => {
   // FreeCells裡面的全部資訊
-  const freecellsData = useSelector(({ game }) => game.freecells);
+  const freeCellsData = useSelector(({ game }) => game.freeCells);
 
   // 渲染各個Freecell
-  const renderEachFreeCell = freecellsData => {
-    return Object.entries(freecellsData).map(([freecellId, freecellCards]) => {
-      return (
-        <S.FreeCell key={freecellId}>{renderCards(freecellCards)}</S.FreeCell>
-      );
+  const renderEachFreeCell = freeCellsData => {
+    return Object.entries(freeCellsData).map(([freecellId, freecellCards]) => {
+      return <S.FreeCell key={freecellId}>{renderCards(freecellCards)}</S.FreeCell>;
     });
   };
 
-  return <S.FreeCells>{renderEachFreeCell(freecellsData)}</S.FreeCells>;
+  return <S.FreeCells>{renderEachFreeCell(freeCellsData)}</S.FreeCells>;
 };
 
 export default memo(FreeCells);

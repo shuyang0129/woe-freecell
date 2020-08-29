@@ -58,14 +58,14 @@ export const restartGame = () => (dispatch, getState) => {
 };
 
 /**
- * @name moveToFreecell
+ * @name moveToFreeCell
  * @param {String} cardId 想要移動的卡片ID，ex: 'S6'
- * @param {String} targetId 目的地卡片區域ID，ex: 'freecell-0'
+ * @param {String} targetId 目的地卡片區域ID，ex: 'freeCell-0'
  * @param {String} sourceId 來源卡片區域ID，ex: 'tableauColumn-0'
  * @param {String} sourceType 來源卡片類別ID，ex: 'tableau'
- * @description 移動卡片到Freecells區域
+ * @description 移動卡片到FreeCells區域
  */
-export const moveToFreecell = ({ cardId, targetId, sourceId, sourceType }) => (
+export const moveToFreeCell = ({ cardId, targetId, sourceId, sourceType }) => (
   dispatch,
   getState,
 ) => {
@@ -76,19 +76,19 @@ export const moveToFreecell = ({ cardId, targetId, sourceId, sourceType }) => (
   const newGameState = _.cloneDeep(gameState);
 
   // 3) 移動卡片
-  // 要確認: 1.目標freecell是不是空的 2.目的地位置有沒有這張卡片 3.卡片是否為目的地位置最後一張牌
+  // 要確認: 1.目標freeCell是不是空的 2.目的地位置有沒有這張卡片 3.卡片是否為目的地位置最後一張牌
   const sourceCells = newGameState[sourceType][sourceId];
-  const targetCells = newGameState.freecells[targetId];
+  const targetCells = newGameState.freeCells[targetId];
 
-  // 3-1) 確認：目標freecell是不是空的
-  const isFreecellEmpty = targetCells.length === 0;
+  // 3-1) 確認：目標freeCell是不是空的
+  const isFreeCellEmpty = targetCells.length === 0;
   // 3-2) 確認：目的地位置有沒有這張卡片
   const isCardExist = sourceCells.includes(cardId);
   // 3-3) 確認：卡片是否為目的地位置最後一張牌
   const isCardLastItem = isCardExist && sourceCells.indexOf(cardId) === sourceCells.length - 1;
 
   // 3-4) 上述條件成立，[移除]來源位置的卡片；[新增]目的地位置卡片
-  if (isFreecellEmpty && isCardExist && isCardLastItem) {
+  if (isFreeCellEmpty && isCardExist && isCardLastItem) {
     sourceCells.pop();
     targetCells.push(cardId);
     // 4) 更新牌局
@@ -97,11 +97,11 @@ export const moveToFreecell = ({ cardId, targetId, sourceId, sourceType }) => (
 };
 
 /**
- * @name moveToFreecell
+ * @name moveToFreeCell
  * @param {String} cardId 想要移動的卡片ID，ex: 'C3'
  * @param {String} targetId 目的地卡片區域ID，ex: 'CLUB'
- * @param {String} sourceId 來源卡片區域ID，ex: 'freecell'
- * @param {String} sourceType 來源卡片類別ID，ex: 'freecells'
+ * @param {String} sourceId 來源卡片區域ID，ex: 'freeCell'
+ * @param {String} sourceType 來源卡片類別ID，ex: 'freeCells'
  * @description 移動卡片到FoundationCells區域
  */
 export const moveToFoundationCell = ({ cardId, targetId, sourceId, sourceType }) => (
