@@ -26,7 +26,7 @@ export const defaultGameState = {
 };
 
 export const defaultPlayState = {
-  moves: 0,
+  moves: -1,
   gameCode: 0,
   historyMoves: [],
   draggingCards: [],
