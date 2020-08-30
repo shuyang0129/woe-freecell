@@ -314,3 +314,28 @@ export const possibleMoveToFreeCells = gameState => {
   });
   return possibleMove;
 };
+
+/**
+ * @name getSelectingCards
+ * @param {Object}
+ *  cardId => 被選取的卡片ID
+ *  sourceType => 被選取卡片的區域是哪個
+ *  sourceId => 被選取卡片的區域ID
+ *  gameState => 目前的Game state
+ * @description 找出被選取的卡片們
+ * @reutrn 回傳被選取的卡片陣列
+ */
+export const getSelectingCards = ({ cardId, sourceType, sourceId, gameState }) => {
+  const gameStateClone = _.cloneDeep(gameState);
+  const sourceCells = gameStateClone[sourceType][sourceId];
+
+  // 先取得卡片Index
+  const sourceCardIndex = sourceCells.indexOf(cardId);
+  // 如果不存在這張卡片，不做任何事
+  if (sourceCardIndex < 0) return;
+
+  // 取得被選取的卡片們(這個情況可能多張)
+  const selectingCards = sourceCells.slice(sourceCardIndex);
+
+  return selectingCards;
+};
