@@ -344,6 +344,7 @@ export const getSelectingCards = (gameState, { cardId, sourceType, sourceId }) =
 /**
  * @name checkIsCardDraggable
  * @description 檢查指定卡片是否可以被拖曳，根據不同區域會有不同規則
+ * @returns Boolean(true || false)
  */
 export const checkIsCardDraggable = (gameState, { cardId, sourceType, sourceId }) => {
   const gameStateClone = _.cloneDeep(gameState);

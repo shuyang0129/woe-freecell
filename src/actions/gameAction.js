@@ -8,7 +8,6 @@ import {
   updatePossibleMove,
 } from './playAction';
 import {
-  checkIsCardDraggable,
   checkIsValidSequence,
   generateNewGame,
   possibleMoveToFoundationCells,
