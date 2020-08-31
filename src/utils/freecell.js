@@ -1,6 +1,7 @@
-import _ from 'lodash';
 import * as cells from '@constants/cells';
 import * as suit from '@constants/suits';
+
+import _ from 'lodash';
 
 /*
  ** Club(c)     => 梅花 ♣
@@ -325,7 +326,7 @@ export const possibleMoveToFreeCells = gameState => {
  * @description 找出被選取的卡片們
  * @reutrn 回傳被選取的卡片陣列
  */
-export const getSelectingCards = ({ cardId, sourceType, sourceId, gameState }) => {
+export const getSelectingCards = (gameState, { cardId, sourceType, sourceId }) => {
   const gameStateClone = _.cloneDeep(gameState);
   const sourceCells = gameStateClone[sourceType][sourceId];
 
@@ -338,4 +339,35 @@ export const getSelectingCards = ({ cardId, sourceType, sourceId, gameState }) =
   const selectingCards = sourceCells.slice(sourceCardIndex);
 
   return selectingCards;
+};
+
+/**
+ * @name checkIsCardDraggable
+ * @description 檢查指定卡片是否可以被拖曳，根據不同區域會有不同規則
+ */
+export const checkIsCardDraggable = (gameState, { cardId, sourceType, sourceId }) => {
+  const gameStateClone = _.cloneDeep(gameState);
+  const sourceCell = gameStateClone[sourceType][sourceId];
+
+  const isCardExist = sourceCell.includes(cardId);
+
+  // 如果是FreeCells，有卡片存在就可以拖曳
+  if (sourceType === cells.FREE_CELLS) {
+    return isCardExist;
+  }
+
+  // 如果是FoundationCells，有這張卡片而且這張卡片是最後一張的話，可以拖曳
+  if (sourceType === cells.FOUNDATION_CELLS) {
+    const isCardLastItem = sourceCell.indexOf(cardId) === sourceCell.length - 1;
+    return isCardExist && isCardLastItem;
+  }
+
+  // 如果是Tableau，有這張卡片，然後是合法排序(花色相間、遞減排序)
+  if (sourceType === cells.TABLEAU) {
+    const selectingCards = getSelectingCards(gameStateClone, { cardId, sourceType, sourceId });
+    const isValidSequence = checkIsValidSequence(selectingCards);
+    return isCardExist && isValidSequence;
+  }
+
+  return false;
 };
