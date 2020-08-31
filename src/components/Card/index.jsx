@@ -2,8 +2,12 @@ import * as S from './style';
 import * as dndType from '@constants/dndType';
 
 import React, { memo, useEffect, useState } from 'react';
+import {
+  checkIsCardDraggable,
+  checkIsValidSequence,
+  getSelectingCards,
+} from '../../utils/freecell';
 
-import { checkIsCardDraggable } from '../../utils/freecell';
 import { useDrag } from 'react-dnd';
 import { useSelector } from 'react-redux';
 
@@ -17,12 +21,31 @@ const Card = ({ cardId, sourceType, sourceId }) => {
       sourceType,
       sourceId,
     },
-    begin: monitor => console.log('canDrag', !!monitor.canDrag(), collectedProps),
+    begin: monitor => console.log('begin', monitor.getItem(), collectedProps),
     canDrag: () => checkIsCardDraggable(game, { cardId, sourceType, sourceId }),
+    isDragging: monitor => {
+      const draggingItem = monitor.getItem();
+      const { cardId, sourceType, sourceId } = draggingItem;
+
+      if (!cardId || !sourceType || !sourceId) return false;
+
+      const draggingCards = getSelectingCards(game, { cardId, sourceType, sourceId });
+      const isValidSequence = checkIsValidSequence(draggingCards);
+
+      return isValidSequence && draggingCards.includes(cardId);
+    },
     collect: monitor => ({
       canDrag: !!monitor.canDrag(),
+      isDragging: monitor.isDragging(),
+      items: getSelectingCards(game, { cardId, sourceType, sourceId }),
     }),
   });
+
+  useEffect(() => {
+    console.log('Ha', collectedProps);
+    if (collectedProps.isDragging && collectedProps.canDrag) {
+    }
+  }, [collectedProps]);
 
   /**
    * @name getImg

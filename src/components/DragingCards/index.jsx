@@ -10,7 +10,11 @@ import { useSelector } from 'react-redux';
 
 const DraggingCards = () => {
   const game = useSelector(({ game }) => game);
-  const [draggingCards, setDraggingCards] = useState([]);
+  // const [draggingCards, setDraggingCards] = useState([]);
+
+  const render = React.useRef(0);
+  render.current++;
+  console.log(render.current);
 
   const { item, itemType, isDragging, initialOffset, currentOffset } = useDragLayer(monitor => {
     return {
@@ -22,29 +26,30 @@ const DraggingCards = () => {
     };
   });
 
-  useEffect(() => {
-    if (!!item) {
-      const { cardId, sourceType, sourceId } = item;
-      const draggingCards = getSelectingCards(game, { cardId, sourceType, sourceId });
-      setDraggingCards(draggingCards);
-    }
-  }, [item]);
+  // useEffect(() => {
+  //   if (!!item) {
+  //     const { cardId, sourceType, sourceId } = item;
+  //     const draggingCards = getSelectingCards(game, { cardId, sourceType, sourceId });
+  //     setDraggingCards(draggingCards);
+  //   }
+  // }, [item]);
 
-  useEffect(() => {
-    const absortController = new AbortController();
-    const signal = absortController.signal;
-    console.log('signal', signal);
+  // useEffect(() => {
+  //   const absortController = new AbortController();
+  //   const signal = absortController.signal;
+  //   console.log('signal', signal);
 
-    return () => absortController.abort();
-  }, []);
+  //   return () => absortController.abort();
+  // }, []);
 
   if (!isDragging || !item || itemType !== dndType.CARD) return null;
 
   return (
-    <S.DragginCards initialOffset={initialOffset} currentOffset={currentOffset}>
-      {renderCards(draggingCards, { sourceType: item.sourceType, sourceId: item.sourceId })}
+    <S.DragginCards>
+      {renderCards(['C1', 'C2'], { sourceType: item.sourceType, sourceId: item.sourceId })}
     </S.DragginCards>
   );
 };
 
 export default DraggingCards;
+//initialOffset={initialOffset} currentOffset={currentOffset}

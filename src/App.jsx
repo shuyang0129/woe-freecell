@@ -88,7 +88,7 @@ const App = () => {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <DraggingCards />
+      {/* <DraggingCards /> */}
       <Solitaire />
     </DndProvider>
   );
