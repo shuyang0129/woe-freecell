@@ -12,10 +12,6 @@ const DraggingCards = () => {
   const game = useSelector(({ game }) => game);
   // const [draggingCards, setDraggingCards] = useState([]);
 
-  const render = React.useRef(0);
-  render.current++;
-  console.log(render.current);
-
   const { item, itemType, isDragging, initialOffset, currentOffset } = useDragLayer(monitor => {
     return {
       item: monitor.getItem(),
@@ -25,6 +21,10 @@ const DraggingCards = () => {
       isDragging: monitor.isDragging(),
     };
   });
+
+  useEffect(() => {
+    console.log('isDragging', item);
+  }, [item]);
 
   // useEffect(() => {
   //   if (!!item) {
@@ -45,9 +45,10 @@ const DraggingCards = () => {
   if (!isDragging || !item || itemType !== dndType.CARD) return null;
 
   return (
-    <S.DragginCards>
-      {renderCards(['C1', 'C2'], { sourceType: item.sourceType, sourceId: item.sourceId })}
-    </S.DragginCards>
+    <h3>Hello</h3>
+    // <S.DragginCards>
+    //   {renderCards(['C1', 'C2'], { sourceType: item.sourceType, sourceId: item.sourceId })}
+    // </S.DragginCards>
   );
 };
 

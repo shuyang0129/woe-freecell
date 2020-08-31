@@ -2,50 +2,34 @@ import * as S from './style';
 import * as dndType from '@constants/dndType';
 
 import React, { memo, useEffect, useState } from 'react';
-import {
-  checkIsCardDraggable,
-  checkIsValidSequence,
-  getSelectingCards,
-} from '../../utils/freecell';
+import { checkIsCardDraggable, checkIsCardDragging } from '@utils/freecell';
 
 import { useDrag } from 'react-dnd';
 import { useSelector } from 'react-redux';
+import { getEmptyImage } from 'react-dnd-html5-backend';
 
 const Card = ({ cardId, sourceType, sourceId }) => {
   const [imgSrc, setImgSrc] = useState(null);
+
   const game = useSelector(({ game }) => game);
-  const [collectedProps, drag] = useDrag({
+
+  const [{ isDragging }, drag, preview] = useDrag({
     item: {
       cardId,
       type: dndType.CARD,
       sourceType,
       sourceId,
     },
-    begin: monitor => console.log('begin', monitor.getItem(), collectedProps),
     canDrag: () => checkIsCardDraggable(game, { cardId, sourceType, sourceId }),
-    isDragging: monitor => {
-      const draggingItem = monitor.getItem();
-      const { cardId, sourceType, sourceId } = draggingItem;
-
-      if (!cardId || !sourceType || !sourceId) return false;
-
-      const draggingCards = getSelectingCards(game, { cardId, sourceType, sourceId });
-      const isValidSequence = checkIsValidSequence(draggingCards);
-
-      return isValidSequence && draggingCards.includes(cardId);
-    },
+    isDragging: () => checkIsCardDragging(game, { cardId, sourceType, sourceId }),
     collect: monitor => ({
-      canDrag: !!monitor.canDrag(),
       isDragging: monitor.isDragging(),
-      items: getSelectingCards(game, { cardId, sourceType, sourceId }),
     }),
   });
 
   useEffect(() => {
-    console.log('Ha', collectedProps);
-    if (collectedProps.isDragging && collectedProps.canDrag) {
-    }
-  }, [collectedProps]);
+    preview(getEmptyImage(), { captureDraggingState: true });
+  }, [preview]);
 
   /**
    * @name getImg
@@ -59,7 +43,14 @@ const Card = ({ cardId, sourceType, sourceId }) => {
     getImg(cardId).then(({ default: src }) => setImgSrc(src));
   }, [cardId]);
 
-  return !!imgSrc ? <S.Card src={imgSrc} alt="poker card" ref={drag} /> : null;
+  return !!imgSrc ? (
+    <S.Card
+      style={{ opacity: isDragging ? '0' : '100%' }}
+      src={imgSrc}
+      alt="poker card"
+      ref={drag}
+    />
+  ) : null;
 };
 
 export default memo(Card);

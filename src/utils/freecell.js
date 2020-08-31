@@ -380,3 +380,13 @@ export const checkIsCardDraggable = (gameState, { cardId, sourceType, sourceId }
 
   return false;
 };
+
+export const checkIsCardDragging = (gameState, { cardId, sourceType, sourceId }) => {
+  if (!gameState || !cardId || !sourceType || !sourceId) return;
+
+  const gameStateClone = _.cloneDeep(gameState);
+  const draggingCards = getSelectingCards(gameStateClone, { cardId, sourceType, sourceId });
+  const isValidSequence = checkIsValidSequence(draggingCards);
+
+  return isValidSequence ? draggingCards.includes(cardId) : false;
+};
