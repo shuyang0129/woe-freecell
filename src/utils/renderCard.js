@@ -8,11 +8,9 @@ import React from 'react';
  * @description 傳入array of cards，並渲染卡片
  * @tutorial
  * renderCards(["S6, S7"], {left: 10, top: 12)
- * => <><Card name="S6" left={10} top={12} /><Card name="S7" left={10} top={12} /></>
+ * => <><Card cardId="S6" left={10} top={12} /><Card cardId="S7" left={10} top={12} /></>
  * @return Components
  */
 export const renderCards = (cards, additionalProps) => {
-  return cards.map(card => (
-    <Card key={card} name={card} {...additionalProps} />
-  ));
+  return cards.map(cardId => <Card key={cardId} cardId={cardId} {...additionalProps} />);
 };

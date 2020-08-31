@@ -13,15 +13,15 @@ const Card = props => {
 
   /**
    * @name getImg
-   * @param {string} name 撲克牌圖片名稱，ex: 'c1'
+   * @param {string} cardId 撲克牌圖片名稱，ex: 'c1'
    * @description 使用dynamic import，載入撲克牌圖片
    * @returns Promise => res.default 才是我們要的值
    */
-  const getImg = name => import(`@assets/img/cards/${name}.png`);
+  const getImg = cardId => import(`@assets/img/cards/${cardId}.png`);
 
   useEffect(() => {
-    getImg(props.name).then(({ default: src }) => setImgSrc(src));
-  }, [props.name]);
+    getImg(props.cardId).then(({ default: src }) => setImgSrc(src));
+  }, [props.cardId]);
 
   return !!imgSrc ? <S.Card src={imgSrc} alt="poker card" ref={drag} /> : null;
 };
