@@ -1,9 +1,15 @@
-import React, { useState, useEffect, memo } from 'react';
-
 import * as S from './style';
 
-const Card = ({ name }) => {
+import React, { memo, useEffect, useState } from 'react';
+
+import { useDrag } from 'react-dnd';
+
+const Card = props => {
   const [imgSrc, setImgSrc] = useState(null);
+  const [collectedProps, drag] = useDrag({
+    item: { name: props.name, type: 'CARD' },
+    begin: monitor => console.log(monitor, props),
+  });
 
   /**
    * @name getImg
@@ -14,10 +20,10 @@ const Card = ({ name }) => {
   const getImg = name => import(`@assets/img/cards/${name}.png`);
 
   useEffect(() => {
-    getImg(name).then(({ default: src }) => setImgSrc(src));
-  }, [name]);
+    getImg(props.name).then(({ default: src }) => setImgSrc(src));
+  }, [props.name]);
 
-  return !!imgSrc ? <S.Card src={imgSrc} alt="poker card" /> : null;
+  return !!imgSrc ? <S.Card src={imgSrc} alt="poker card" ref={drag} /> : null;
 };
 
 export default memo(Card);

@@ -1,14 +1,16 @@
+import React, { useEffect } from 'react';
 import {
+  findPossibleMove,
   moveToFoundationCell,
   moveToFreeCell,
+  moveToTableau,
   restartGame,
   startNewGame,
   undoGameState,
-  moveToTableau,
-  findPossibleMove,
 } from './actions/gameAction';
 
-import React, { useEffect } from 'react';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import Solitaire from '@pages/Solitaire';
 import { useDispatch } from 'react-redux';
 
@@ -35,83 +37,11 @@ const App = () => {
     );
   }, [dispatch]);
 
-  // dispatch(
-  //   moveToFoundationCell({
-  //     targetId: 'CLUB',
-  //     sourceId: 'tableauColumn-5',
-  //     cardId: 'C1',
-  //     sourceType: 'tableau',
-  //   }),
-  // );
-  // dispatch(
-  //   moveToFoundationCell({
-  //     targetId: 'SPADE',
-  //     sourceId: 'tableauColumn-5',
-  //     cardId: 'S1',
-  //     sourceType: 'tableau',
-  //   }),
-  // );
-  // dispatch(
-  //   moveToFoundationCell({
-  //     targetId: 'CLUB',
-  //     sourceId: 'freeCell-1',
-  //     cardId: 'C2',
-  //     sourceType: 'freeCells',
-  //   }),
-  // );
-  // dispatch(
-  //   moveToFreecell({
-  //     targetId: 'freeCell-2',
-  //     sourceId: 'tableauColumn-6',
-  //     cardId: 'C8',
-  //     sourceType: 'tableau',
-  //   }),
-  // );
-  // dispatch(
-  //   moveToFreeCell({
-  //     targetId: 'freeCell-2',
-  //     sourceId: 'tableauColumn-5',
-  //     cardId: 'C12',
-  //     sourceType: 'tableau',
-  //   }),
-  // );
-  // dispatch(
-  //   moveToFreeCell({
-  //     targetId: 'freeCell-3',
-  //     sourceId: 'tableauColumn-5',
-  //     cardId: 'H7',
-  //     sourceType: 'tableau',
-  //   }),
-  // );
-  // dispatch(
-  //   moveToFreeCell({
-  //     targetId: 'freeCell-2',
-  //     sourceId: 'tableauColumn-6',
-  //     cardId: 'C8',
-  //     sourceType: 'tableau',
-  //   }),
-  // );
-  // dispatch(
-  //   moveToTableau({
-  //     targetId: 'tableauColumn-6',
-  //     sourceId: 'tableauColumn-7',
-  //     cardId: 'C10',
-  //     sourceType: 'tableau',
-  //   }),
-  // );
-  // dispatch(
-  //   moveToTableau({
-  //     targetId: 'tableauColumn-5',
-  //     sourceId: 'tableauColumn-6',
-  //     cardId: 'H11',
-  //     sourceType: 'tableau',
-  //   }),
-  // );
-  // dispatch(undoGameState());
-  // dispatch(restartGame());
-  // dispatch(findPossibleMove());
-
-  return <Solitaire />;
+  return (
+    <DndProvider backend={HTML5Backend}>
+      <Solitaire />
+    </DndProvider>
+  );
 };
 
 export default App;

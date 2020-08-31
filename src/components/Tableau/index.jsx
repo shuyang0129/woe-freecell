@@ -1,4 +1,5 @@
 import * as S from './style';
+import * as cells from '@constants/cells';
 
 import React from 'react';
 import { renderCards } from '@utils/renderCard';
@@ -8,33 +9,21 @@ const Tableau = () => {
   const tableauData = useSelector(({ game }) => game.tableau);
 
   const renderTableColumns = tableauData => {
-    return Object.entries(tableauData).map(
-      ([tableauColumnId, tableauColumnData]) => {
-        return (
-          <S.TableauColumn key={tableauColumnId}>
-            {renderCards(tableauColumnData)}
-          </S.TableauColumn>
-        );
-      },
-    );
+    return Object.entries(tableauData).map(([tableauColumnId, tableauColumnData]) => {
+      const additionalInfo = {
+        sourceId: tableauColumnId,
+        sourceType: cells.TABLEAU,
+      };
+
+      return (
+        <S.TableauColumn key={tableauColumnId}>
+          {renderCards(tableauColumnData, additionalInfo)}
+        </S.TableauColumn>
+      );
+    });
   };
 
-  return (
-    <S.Tableau>
-      {renderTableColumns(tableauData)}
-      {/* <S.TableauColumn>
-        <Card name="C1" />
-        <Card name="C1" />
-      </S.TableauColumn>
-      <S.TableauColumn />
-      <S.TableauColumn />
-      <S.TableauColumn />
-      <S.TableauColumn />
-      <S.TableauColumn />
-      <S.TableauColumn />
-      <S.TableauColumn /> */}
-    </S.Tableau>
-  );
+  return <S.Tableau>{renderTableColumns(tableauData)}</S.Tableau>;
 };
 
 export default Tableau;

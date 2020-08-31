@@ -1,4 +1,5 @@
 import * as S from './style';
+import * as cells from '@constants/cells';
 
 import React from 'react';
 import { renderCards } from '@utils/renderCard';
@@ -10,22 +11,21 @@ const FoundationCells = () => {
 
   // 渲染各個FoundationCell
   const renderEachFoundationCell = foundationCellsData => {
-    return Object.entries(foundationCellsData).map(
-      ([foundationCellId, foundationCellCards]) => {
-        return (
-          <S.FoundationCell key={foundationCellId} suit={foundationCellId}>
-            {renderCards(foundationCellCards)}
-          </S.FoundationCell>
-        );
-      },
-    );
+    return Object.entries(foundationCellsData).map(([foundationCellId, foundationCellCards]) => {
+      const additionalInfo = {
+        sourceId: foundationCellId,
+        sourceType: cells.FOUNDATION_CELLS,
+      };
+
+      return (
+        <S.FoundationCell key={foundationCellId} suit={foundationCellId}>
+          {renderCards(foundationCellCards, additionalInfo)}
+        </S.FoundationCell>
+      );
+    });
   };
 
-  return (
-    <S.FoundationCells>
-      {renderEachFoundationCell(foundationCellsData)}
-    </S.FoundationCells>
-  );
+  return <S.FoundationCells>{renderEachFoundationCell(foundationCellsData)}</S.FoundationCells>;
 };
 
 export default FoundationCells;

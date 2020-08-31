@@ -1,8 +1,10 @@
-import { renderCards } from '@utils/renderCard';
-import { useSelector } from 'react-redux';
+import * as S from './style';
+import * as cells from '@constants/cells';
+
 import React, { memo } from 'react';
 
-import * as S from './style';
+import { renderCards } from '@utils/renderCard';
+import { useSelector } from 'react-redux';
 
 /**
  * @name FreeCells
@@ -15,7 +17,11 @@ const FreeCells = () => {
   // 渲染各個Freecell
   const renderEachFreeCell = freeCellsData => {
     return Object.entries(freeCellsData).map(([freecellId, freecellCards]) => {
-      return <S.FreeCell key={freecellId}>{renderCards(freecellCards)}</S.FreeCell>;
+      const additionalInfo = {
+        sourceId: freecellId,
+        sourceType: cells.FREE_CELLS,
+      };
+      return <S.FreeCell key={freecellId}>{renderCards(freecellCards, additionalInfo)}</S.FreeCell>;
     });
   };
 
