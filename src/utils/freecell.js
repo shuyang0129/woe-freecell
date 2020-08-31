@@ -59,6 +59,8 @@ export const generateNewGame = gameId => {
  * @return Boolean
  */
 export const checkIsCardBlack = card => {
+  if (!card) return;
+
   const cardsInBlack = new Set([suit.CLUB[0], suit.SPADE[0]]);
   return cardsInBlack.has(card[0]);
 };
@@ -72,7 +74,7 @@ export const checkIsCardBlack = card => {
  * @returns Boolean
  */
 export const checkIsValidSequence = cards => {
-  if (!cards) return;
+  if (!cards || !cards[0]) return;
 
   let isCardBlack = checkIsCardBlack(cards[0]);
   let cardNum = parseInt(cards[0].substr(1));
