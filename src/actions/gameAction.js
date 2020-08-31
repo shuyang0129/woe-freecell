@@ -1,5 +1,4 @@
 import { INIT_GAME, UPDATE_GAME } from './actionTypes';
-
 import {
   addHistoryMoves,
   increaseMoves,
@@ -8,11 +7,17 @@ import {
   updateGameCode,
   updatePossibleMove,
 } from './playAction';
+import {
+  checkIsCardDraggable,
+  checkIsValidSequence,
+  generateNewGame,
+  possibleMoveToFoundationCells,
+  possibleMoveToFreeCells,
+  possibleMoveToTableau,
+} from '@utils/freecell';
 
 import _ from 'lodash';
-import { generateNewGame, checkIsValidSequence, possibleMoveToFreeCells } from '@utils/freecell';
 import { randomNum } from '@utils';
-import { possibleMoveToFoundationCells, possibleMoveToTableau } from '../utils/freecell';
 
 export const initGame = () => ({
   type: INIT_GAME,
