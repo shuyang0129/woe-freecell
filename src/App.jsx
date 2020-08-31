@@ -14,6 +14,7 @@ import DraggingCards from './components/DragingCards';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import Solitaire from '@pages/Solitaire';
 import { useDispatch } from 'react-redux';
+import CardContextProvider from './providers/CardContextProvider';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -52,44 +53,46 @@ const App = () => {
         sourceType: 'tableau',
       }),
     );
-    // dispatch(
-    //   moveToFoundationCell({
-    //     targetId: 'CLUB',
-    //     sourceId: 'freeCell-1',
-    //     cardId: 'C2',
-    //     sourceType: 'freeCells',
-    //   }),
-    // );
-    // dispatch(
-    //   moveToFreeCell({
-    //     targetId: 'freeCell-1',
-    //     sourceId: 'tableauColumn-6',
-    //     cardId: 'C8',
-    //     sourceType: 'tableau',
-    //   }),
-    // );
-    // dispatch(
-    //   moveToTableau({
-    //     targetId: 'tableauColumn-5',
-    //     sourceId: 'tableauColumn-6',
-    //     cardId: 'H11',
-    //     sourceType: 'tableau',
-    //   }),
-    // );
-    // dispatch(
-    //   moveToTableau({
-    //     targetId: 'tableauColumn-5',
-    //     sourceId: 'tableauColumn-7',
-    //     cardId: 'C10',
-    //     sourceType: 'tableau',
-    //   }),
-    // );
+    dispatch(
+      moveToFoundationCell({
+        targetId: 'CLUB',
+        sourceId: 'freeCell-1',
+        cardId: 'C2',
+        sourceType: 'freeCells',
+      }),
+    );
+    dispatch(
+      moveToFreeCell({
+        targetId: 'freeCell-1',
+        sourceId: 'tableauColumn-6',
+        cardId: 'C8',
+        sourceType: 'tableau',
+      }),
+    );
+    dispatch(
+      moveToTableau({
+        targetId: 'tableauColumn-5',
+        sourceId: 'tableauColumn-6',
+        cardId: 'H11',
+        sourceType: 'tableau',
+      }),
+    );
+    dispatch(
+      moveToTableau({
+        targetId: 'tableauColumn-5',
+        sourceId: 'tableauColumn-7',
+        cardId: 'C10',
+        sourceType: 'tableau',
+      }),
+    );
   }, [dispatch]);
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <DraggingCards />
-      <Solitaire />
+      <CardContextProvider>
+        <DraggingCards />
+        <Solitaire />
+      </CardContextProvider>
     </DndProvider>
   );
 };
