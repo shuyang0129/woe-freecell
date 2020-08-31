@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 
 import King from '@assets/img/logo/king_happy.png';
 
@@ -13,4 +13,4 @@ const Logo = ({ title = 'FREECELL' }) => {
   );
 };
 
-export default Logo;
+export default memo(Logo);

@@ -5,7 +5,7 @@ import FoundationCells from '@components/FoundationCells';
 import FreeCells from '@components/FreeCells';
 import GameInfo from '@components/GameInfo';
 import Logo from '@components/Logo';
-import React from 'react';
+import React, { memo } from 'react';
 import Tableau from '@components/Tableau';
 
 function Solitaire() {
@@ -25,4 +25,4 @@ function Solitaire() {
   );
 }
 
-export default Solitaire;
+export default memo(Solitaire);

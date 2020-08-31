@@ -1,7 +1,7 @@
 import * as S from './style';
 import * as dndType from '@constants/dndType';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, memo } from 'react';
 
 import { getSelectingCards } from '@/utils/freecell';
 import { renderCards } from '@utils/renderCard';
@@ -52,5 +52,5 @@ const DraggingCards = () => {
   );
 };
 
-export default DraggingCards;
+export default memo(DraggingCards);
 //initialOffset={initialOffset} currentOffset={currentOffset}

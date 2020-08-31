@@ -1,6 +1,6 @@
 import { startNewGame, restartGame, undoGameState } from '@actions/gameAction';
 import { useDispatch } from 'react-redux';
-import React from 'react';
+import React, { memo } from 'react';
 
 import * as S from './style';
 
@@ -29,4 +29,4 @@ const ControllButtons = () => {
   );
 };
 
-export default ControllButtons;
+export default memo(ControllButtons);

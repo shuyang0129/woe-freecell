@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 
 import InfoSvg from '@assets/img/info/info.svg';
 
@@ -16,4 +16,4 @@ const GameInfo = () => {
   );
 };
 
-export default GameInfo;
+export default memo(GameInfo);

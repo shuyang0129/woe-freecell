@@ -1,7 +1,7 @@
 import * as S from './style';
 import * as cells from '@constants/cells';
 
-import React from 'react';
+import React, { memo } from 'react';
 import { renderCards } from '@utils/renderCard';
 import { useSelector } from 'react-redux';
 
@@ -28,4 +28,4 @@ const FoundationCells = () => {
   return <S.FoundationCells>{renderEachFoundationCell(foundationCellsData)}</S.FoundationCells>;
 };
 
-export default FoundationCells;
+export default memo(FoundationCells);
