@@ -194,7 +194,7 @@ export const moveToTableau = ({ cardId, targetId, sourceId, sourceType }) => (
  */
 export const undoGameState = () => (dispatch, getState) => {
   // 如果沒有步數，就沒有上一步可以回，不執行任何事
-  if (getState().play.moves <= 0) return;
+  if (getState().play.historyMoves <= 1) return;
 
   // 1) 移除最後一筆歷史紀錄
   dispatch(popHistoryMoves());
