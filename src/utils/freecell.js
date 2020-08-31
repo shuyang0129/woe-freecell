@@ -72,6 +72,8 @@ export const checkIsCardBlack = card => {
  * @returns Boolean
  */
 export const checkIsValidSequence = cards => {
+  if (!cards) return;
+
   let isCardBlack = checkIsCardBlack(cards[0]);
   let cardNum = parseInt(cards[0].substr(1));
 
@@ -327,6 +329,8 @@ export const possibleMoveToFreeCells = gameState => {
  * @reutrn 回傳被選取的卡片陣列
  */
 export const getSelectingCards = (gameState, { cardId, sourceType, sourceId }) => {
+  if (!gameState || !cardId || !sourceType || !sourceId) return;
+
   const gameStateClone = _.cloneDeep(gameState);
   const sourceCells = gameStateClone[sourceType][sourceId];
 
@@ -347,6 +351,8 @@ export const getSelectingCards = (gameState, { cardId, sourceType, sourceId }) =
  * @returns Boolean(true || false)
  */
 export const checkIsCardDraggable = (gameState, { cardId, sourceType, sourceId }) => {
+  if (!gameState || !cardId || !sourceType || !sourceId) return;
+
   const gameStateClone = _.cloneDeep(gameState);
   const sourceCell = gameStateClone[sourceType][sourceId];
 

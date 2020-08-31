@@ -1,5 +1,6 @@
 import Card from '@components/Card';
 import React from 'react';
+import uniqid from 'uniqid';
 
 /**
  * @name renderCards
@@ -12,5 +13,7 @@ import React from 'react';
  * @return Components
  */
 export const renderCards = (cards, additionalProps) => {
-  return cards.map(cardId => <Card key={cardId} cardId={cardId} {...additionalProps} />);
+  if (!!cards && cards.length > 0) {
+    return cards.map(cardId => <Card key={uniqid()} cardId={cardId} {...additionalProps} />);
+  }
 };

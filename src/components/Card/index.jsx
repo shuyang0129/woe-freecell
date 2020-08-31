@@ -12,8 +12,10 @@ const Card = ({ cardId, sourceType, sourceId }) => {
   const game = useSelector(({ game }) => game);
   const [collectedProps, drag] = useDrag({
     item: {
-      id: cardId,
+      cardId,
       type: dndType.CARD,
+      sourceType,
+      sourceId,
     },
     begin: monitor => console.log('canDrag', !!monitor.canDrag(), collectedProps),
     canDrag: () => checkIsCardDraggable(game, { cardId, sourceType, sourceId }),
