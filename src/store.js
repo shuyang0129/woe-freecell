@@ -18,7 +18,7 @@ store.subscribe(() => {
   // 如果步數大於0，遊戲開始
   if (play.moves > 0 && !play.isGameStarted) store.dispatch(updateIsGameStarted(true));
 
-  // console.log(store.getState());
+  console.log(store.getState());
 });
 
 export default store;
