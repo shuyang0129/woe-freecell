@@ -17,7 +17,7 @@ export const TableauColumn = styled.div`
   width: 95px;
   & > :nth-child(n + 2) {
     box-shadow: 0 -0.5px rgba(186, 186, 186, 0.2);
-    margin-top: -120px;
+    margin-top: -110px;
   }
 
   &::before {

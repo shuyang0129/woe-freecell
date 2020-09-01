@@ -1,20 +1,26 @@
 import * as S from './style';
 import * as dndType from '@constants/dndType';
 
-import React, { memo, useEffect, useContext } from 'react';
-import { checkIsCardDraggable, checkIsCardDragging } from '@utils/freecell';
-import { CardContext } from '../../providers/CardContextProvider';
+import React, { memo, useContext, useEffect } from 'react';
+import {
+  checkIsCardDraggable,
+  checkIsCardDragging,
+  checkIsValidSequence,
+  getSelectingCards,
+} from '@utils/freecell';
 
+import { CardContext } from '../../providers/CardContextProvider';
+import _ from 'lodash';
+import { getEmptyImage } from 'react-dnd-html5-backend';
 import { useDrag } from 'react-dnd';
 import { useSelector } from 'react-redux';
-import { getEmptyImage } from 'react-dnd-html5-backend';
 
 const Card = ({ cardId, sourceType, sourceId }) => {
   const imgSrc = useContext(CardContext);
 
   const game = useSelector(({ game }) => game);
 
-  const [{ isDragging }, drag, preview] = useDrag({
+  const [{ isDragging, dragItem }, drag, preview] = useDrag({
     item: {
       cardId,
       type: dndType.CARD,
@@ -22,9 +28,10 @@ const Card = ({ cardId, sourceType, sourceId }) => {
       sourceId,
     },
     canDrag: () => checkIsCardDraggable(game, { cardId, sourceType, sourceId }),
-    isDragging: () => checkIsCardDragging(game, { cardId, sourceType, sourceId }),
+    isDragging: () => checkIsCardDragging(game, dragItem, { cardId, sourceType, sourceId }),
     collect: monitor => ({
       isDragging: monitor.isDragging(),
+      dragItem: monitor.getItem(),
     }),
   });
 
