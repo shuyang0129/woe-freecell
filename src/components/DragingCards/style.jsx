@@ -1,10 +1,10 @@
 const { default: styled } = require('styled-components');
 
-export const DragginCards = styled.div.attrs(({ initialOffset, currentOffset }) => {
+export const DragginCardsWrapper = styled.div.attrs(({ currentOffset }) => {
   let { x, y } = currentOffset;
   return {
     style: {
-      display: (!initialOffset || !currentOffset) && 'none',
+      display: !currentOffset && 'none',
       transform: `translate(${x}px, ${y}px)`,
     },
   };
@@ -20,7 +20,7 @@ export const DragginCards = styled.div.attrs(({ initialOffset, currentOffset }) 
   }
 `;
 
-export const DragginerLayerContainer = styled.div`
+export const DragginCardsContainer = styled.div`
   position: 'fixed';
   pointer-events: 'none';
   z-index: 100;
@@ -28,4 +28,13 @@ export const DragginerLayerContainer = styled.div`
   top: 0;
   width: '100%';
   height: '100%';
+`;
+
+export const Card = styled.img`
+  position: relative;
+  display: block;
+  border-radius: 5px;
+  height: 145px;
+  width: 95px;
+  z-index: 2;
 `;
