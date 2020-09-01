@@ -9,12 +9,12 @@ import {
   undoGameState,
 } from './actions/gameAction';
 
+import CardContextProvider from './providers/CardContextProvider';
 import { DndProvider } from 'react-dnd';
 import DraggingCards from './components/DragingCards';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import Solitaire from '@pages/Solitaire';
 import { useDispatch } from 'react-redux';
-import CardContextProvider from './providers/CardContextProvider';
 
 const App = () => {
   const dispatch = useDispatch();

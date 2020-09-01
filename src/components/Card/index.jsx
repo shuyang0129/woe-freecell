@@ -2,16 +2,12 @@ import * as S from './style';
 import * as dndType from '@constants/dndType';
 
 import React, { memo, useContext, useEffect } from 'react';
-import {
-  checkIsCardDraggable,
-  checkIsCardDragging,
-  checkIsValidSequence,
-  getSelectingCards,
-} from '@utils/freecell';
+import { checkIsCardDraggable, checkIsCardDragging, get } from '@utils/freecell';
 
 import { CardContext } from '../../providers/CardContextProvider';
 import _ from 'lodash';
 import { getEmptyImage } from 'react-dnd-html5-backend';
+import { getSelectingCards } from '../../utils/freecell';
 import { useDrag } from 'react-dnd';
 import { useSelector } from 'react-redux';
 
@@ -26,6 +22,7 @@ const Card = ({ cardId, sourceType, sourceId }) => {
       type: dndType.CARD,
       sourceType,
       sourceId,
+      dragItems: getSelectingCards(game, { cardId, sourceType, sourceId }),
     },
     canDrag: () => checkIsCardDraggable(game, { cardId, sourceType, sourceId }),
     isDragging: () => checkIsCardDragging(game, dragItem, { cardId, sourceType, sourceId }),

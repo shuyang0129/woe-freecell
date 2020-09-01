@@ -1,54 +1,65 @@
 import * as S from './style';
 import * as dndType from '@constants/dndType';
 
-import React, { useEffect, useState, memo } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 
+import Card from '@components/Card';
 import { getSelectingCards } from '@/utils/freecell';
 import { renderCards } from '@utils/renderCard';
+import { uniqueId } from 'lodash';
 import { useDragLayer } from 'react-dnd';
 import { useSelector } from 'react-redux';
 
-const DraggingCards = () => {
-  const game = useSelector(({ game }) => game);
-  // const [draggingCards, setDraggingCards] = useState([]);
+const layerStyles = {
+  position: 'fixed',
+  pointerEvents: 'none',
+  zIndex: 100,
+  left: 0,
+  top: 0,
+  width: '100%',
+  height: '100%',
+};
 
-  const { item, itemType, isDragging, initialOffset, currentOffset } = useDragLayer(monitor => {
+const getItemStyles = (initialOffset, currentOffset) => {
+  if (!initialOffset || !currentOffset) {
     return {
-      item: monitor.getItem(),
-      itemType: monitor.getItemType(),
-      initialOffset: monitor.getInitialSourceClientOffset(),
-      currentOffset: monitor.getSourceClientOffset(),
-      isDragging: monitor.isDragging(),
+      display: 'none',
     };
-  });
+  }
+  let { x, y } = currentOffset;
 
-  useEffect(() => {
-    console.log('isDragging', item);
-  }, [item]);
+  const transform = `translate(${x}px, ${y}px)`;
+  return {
+    transform,
+    WebkitTransform: transform,
+  };
+};
+
+const DraggingCards = () => {
+  const [isRender, setIsRender] = useState(true);
+  const { item, itemType, isDragging, initialOffset, currentOffset } = useDragLayer(monitor => ({
+    item: monitor.getItem(),
+    itemType: monitor.getItemType(),
+    initialOffset: monitor.getInitialSourceClientOffset(),
+    currentOffset: monitor.getSourceClientOffset(),
+    isDragging: monitor.isDragging(),
+  }));
 
   // useEffect(() => {
-  //   if (!!item) {
-  //     const { cardId, sourceType, sourceId } = item;
-  //     const draggingCards = getSelectingCards(game, { cardId, sourceType, sourceId });
-  //     setDraggingCards(draggingCards);
-  //   }
+  //   if (!!item) console.log(item);
   // }, [item]);
 
-  // useEffect(() => {
-  //   const absortController = new AbortController();
-  //   const signal = absortController.signal;
-  //   console.log('signal', signal);
-
-  //   return () => absortController.abort();
-  // }, []);
-
-  if (!isDragging || !item || itemType !== dndType.CARD) return null;
+  if (!isDragging || itemType !== dndType.CARD) return null;
 
   return (
-    <h3>Hello</h3>
-    // <S.DragginCards>
-    //   {renderCards(['C1', 'C2'], { sourceType: item.sourceType, sourceId: item.sourceId })}
-    // </S.DragginCards>
+    // <h3>Hello</h3>
+    <div style={layerStyles}>
+      {/* <S.DragginCards style={getItemStyles(initialOffset, currentOffset)}> */}
+      <S.DragginCards initialOffset={initialOffset} currentOffset={currentOffset}>
+        {/* {isRendered && item.dragItems.map(cardId => <Card key={uniqueId()} cardId={cardId} />)} */}
+        {!!item.dragItems && isRender && renderCards(['C1', 'H2'])}
+      </S.DragginCards>
+    </div>
   );
 };
 
