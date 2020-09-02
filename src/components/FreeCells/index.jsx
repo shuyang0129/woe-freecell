@@ -14,9 +14,6 @@ import { useSelector } from 'react-redux';
 const FreeCells = () => {
   // FreeCells裡面的全部資訊
   const game = useSelector(({ game }) => game);
-  const render = React.useRef(0);
-  render.current++;
-  console.log(render.current);
 
   // 渲染各個Freecell
   const renderEachFreeCell = freeCellsData => {
