@@ -24,7 +24,10 @@ const Card = ({ cardId, sourceType, sourceId }) => {
       dragItems: getSelectingCards(game, { cardId, sourceType, sourceId }),
     },
     canDrag: () => checkIsCardDraggable(game, { cardId, sourceType, sourceId }),
-    isDragging: () => checkIsCardDragging(game, dragItem, { cardId, sourceType, sourceId }),
+    isDragging: monitor => {
+      if (monitor.didDrop()) return false;
+      return checkIsCardDragging(game, dragItem, { cardId, sourceType, sourceId });
+    },
     collect: monitor => ({
       isDragging: monitor.isDragging(),
       dragItem: monitor.getItem(),
@@ -37,7 +40,7 @@ const Card = ({ cardId, sourceType, sourceId }) => {
 
   return !!imgSrc[cardId] ? (
     <S.Card
-      style={{ opacity: isDragging ? '0' : '100%' }}
+      style={{ opacity: isDragging ? '0' : '1' }}
       src={imgSrc[cardId]}
       alt="poker card"
       ref={drag}
