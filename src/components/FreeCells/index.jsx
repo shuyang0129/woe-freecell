@@ -3,7 +3,8 @@ import * as cells from '@constants/cells';
 
 import React, { memo } from 'react';
 
-import { renderCards } from '@utils/renderCard';
+import FreeCell from './FreeCell';
+import { uniqueId } from 'lodash';
 import { useSelector } from 'react-redux';
 
 /**
@@ -12,20 +13,23 @@ import { useSelector } from 'react-redux';
  */
 const FreeCells = () => {
   // FreeCells裡面的全部資訊
-  const freeCellsData = useSelector(({ game }) => game.freeCells);
+  const game = useSelector(({ game }) => game);
+  const render = React.useRef(0);
+  render.current++;
+  console.log(render.current);
 
   // 渲染各個Freecell
   const renderEachFreeCell = freeCellsData => {
     return Object.entries(freeCellsData).map(([freecellId, freecellCards]) => {
-      const additionalInfo = {
+      const sourceInfo = {
         sourceId: freecellId,
         sourceType: cells.FREE_CELLS,
       };
-      return <S.FreeCell key={freecellId}>{renderCards(freecellCards, additionalInfo)}</S.FreeCell>;
+      return <FreeCell key={uniqueId()} freecellCards={freecellCards} {...sourceInfo} />;
     });
   };
 
-  return <S.FreeCells>{renderEachFreeCell(freeCellsData)}</S.FreeCells>;
+  return <S.FreeCells>{renderEachFreeCell(game.freeCells)}</S.FreeCells>;
 };
 
 export default memo(FreeCells);

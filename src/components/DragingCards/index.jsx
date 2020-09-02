@@ -18,7 +18,7 @@ const DraggingCards = () => {
     isDragging: monitor.isDragging(),
   }));
 
-  if (!isDragging || itemType !== dndType.CARD) return null;
+  if (!isDragging || itemType !== dndType.CARD || !currentOffset) return null;
 
   const DraggingCards = () => {
     return item.dragItems.map(cardId => (

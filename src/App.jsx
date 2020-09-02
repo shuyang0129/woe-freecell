@@ -85,6 +85,14 @@ const App = () => {
         sourceType: 'tableau',
       }),
     );
+    // dispatch(
+    //   moveToFreeCell({
+    //     targetId: 'freeCell-3',
+    //     sourceId: 'CLUB',
+    //     cardId: 'C2',
+    //     sourceType: 'foundationCells',
+    //   }),
+    // );
   }, [dispatch]);
 
   return (

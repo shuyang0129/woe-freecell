@@ -1,6 +1,8 @@
 const { default: styled } = require('styled-components');
 
 export const DragginCardsWrapper = styled.div.attrs(({ currentOffset }) => {
+  if (!currentOffset) return;
+
   let { x, y } = currentOffset;
   return {
     style: {
