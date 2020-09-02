@@ -1,24 +1,23 @@
 import styled from 'styled-components';
 
 export const Logo = styled.div`
-  max-width: 74px;
+  align-items: center;
   display: flex;
   flex-flow: column nowrap;
-  align-items: center;
   margin: 0 23px;
-
+  max-width: 74px;
   & > img {
-    width: 100%;
     height: auto;
     margin-bottom: 8px;
+    width: 100%;
   }
-
   & > h1 {
-    text-align: center;
-    font-weight: bold;
-    font-size: 14px;
-    line-height: 17px;
-    letter-spacing: 1.4px;
     color: #222;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 1.4px;
+    line-height: 17px;
+    text-align: center;
+    text-transform: uppercase;
   }
 `;
