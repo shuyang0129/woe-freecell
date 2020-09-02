@@ -322,11 +322,11 @@ export const possibleMoveToFreeCells = gameState => {
 
 /**
  * @name getSelectingCards
- * @param {Object}
- *  cardId => 被選取的卡片ID
- *  sourceType => 被選取卡片的區域是哪個
- *  sourceId => 被選取卡片的區域ID
- *  gameState => 目前的Game state
+ * @param {Object} gameState 目前Game state
+ * @param {Object} card
+ * @param {String} card.cardId 被選取的卡片ID，Ex: 'S1'
+ * @param {String} card.sourceType 被選取卡片的區域是哪個，Ex: 'freeCells'
+ * @param {String} card.sourceId 被選取卡片的區域ID，Ex: 'freeCell-0'
  * @description 找出被選取的卡片們
  * @reutrn 回傳被選取的卡片陣列
  */
@@ -381,11 +381,22 @@ export const checkIsCardDraggable = (gameState, { cardId, sourceType, sourceId }
   return false;
 };
 
-export const checkIsCardDragging = (gameState, dragItem, { cardId, sourceType, sourceId }) => {
-  if (!gameState || !cardId || !sourceType || !sourceId || !dragItem) return;
+/**
+ * @name checkIsCardDragging
+ * @param {Object} gameState 目前Game state
+ * @param {Object} dragingItem 被拖曳的卡片，一樣包含{ cardId, sourceType, sourceId }
+ * @param {Object} card
+ * @param {String} card.cardId 被選取的卡片ID，Ex: 'S1'
+ * @param {String} card.sourceType 被選取卡片的區域是哪個，Ex: 'freeCells'
+ * @param {String} card.sourceId 被選取卡片的區域ID，Ex: 'freeCell-0'
+ * @description 確認目前的卡片是否在被拖曳中
+ * @returns Boolean
+ */
+export const checkIsCardDragging = (gameState, dragingItem, { cardId, sourceType, sourceId }) => {
+  if (!gameState || !cardId || !sourceType || !sourceId || !dragingItem) return;
 
   const gameStateClone = _.cloneDeep(gameState);
-  const draggingCards = getSelectingCards(gameStateClone, { ...dragItem });
+  const draggingCards = getSelectingCards(gameStateClone, { ...dragingItem });
   const isValidSequence = checkIsValidSequence(draggingCards);
 
   return isValidSequence ? draggingCards.includes(cardId) : false;
