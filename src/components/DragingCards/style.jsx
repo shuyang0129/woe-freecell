@@ -21,20 +21,20 @@ export const DragginCardsWrapper = styled.div.attrs(({ currentOffset }) => {
 `;
 
 export const DragginCardsContainer = styled.div`
-  position: 'fixed';
-  pointer-events: 'none';
-  z-index: 100;
+  height: '100%';
   left: 0;
+  pointer-events: 'none';
+  position: 'fixed';
   top: 0;
   width: '100%';
-  height: '100%';
+  z-index: 100;
 `;
 
 export const Card = styled.img`
-  position: relative;
-  display: block;
   border-radius: 5px;
+  display: block;
   height: 145px;
+  position: relative;
   width: 95px;
   z-index: 2;
 `;

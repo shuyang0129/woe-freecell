@@ -6,10 +6,14 @@ export const GameContainer = styled.div`
   display: flex;
   flex-flow: column nowrap;
   height: 100%;
+  left: 50%;
   margin: 0 auto;
   max-width: 1200px;
-  min-width: 993px;
+  min-width: 1054px;
   padding: 0 20px;
+  position: fixed;
+  top: 0;
+  transform: translateX(-50%);
   width: 100%;
 `;
 
