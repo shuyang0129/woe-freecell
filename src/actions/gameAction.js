@@ -167,7 +167,7 @@ export const moveToTableau = ({ cardId, targetId, sourceId, sourceType }) => (
   const sourceCells = newGameState[sourceType][sourceId];
   const targetCells = newGameState.tableau[targetId];
 
-  // 3) 確認前提
+  // 3) 確認是否可以移動
   // 3-1) [確認]卡片存在
   // 先取得卡片Index
   const sourceCardIndex = sourceCells.indexOf(cardId);
@@ -180,11 +180,23 @@ export const moveToTableau = ({ cardId, targetId, sourceId, sourceType }) => (
   // 如果移動中的卡片是無效的排序，不做任何事
   if (!checkIsValidSequence(movingCards)) return;
 
-  // 4) 移除來源卡片;將卡片加入目標區域
+  //  4) 如果目標區域不是空的，確定卡片是否可以放置
+  if (targetCells.length) {
+    // 4-1) 取出目標區域最後一張牌
+    const lastCardInTargetCells = targetCells[targetCells.length - 1];
+    // 4-2) 取得移動中卡片們(這個情況可能多張)
+    const movingCards = sourceCells.slice(sourceCardIndex);
+    // 4-3) 加入目標區域最後一張牌
+    movingCards.unshift(lastCardInTargetCells);
+    // 如果是無效排序，不做任何事情
+    if (!checkIsValidSequence(movingCards)) return;
+  }
+
+  // 5) 移除來源卡片;將卡片加入目標區域
   sourceCells.splice(sourceCardIndex, movingCards.length);
   targetCells.push(...movingCards);
 
-  // 5) 更新牌局
+  // 6) 更新牌局
   dispatch(updateGameState(newGameState));
 };
 
