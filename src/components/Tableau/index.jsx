@@ -20,12 +20,6 @@ const Tableau = () => {
       return (
         <TableauColumn key={uniqueId()} tableauColumnCards={tableauColumnCards} {...sourceInfo} />
       );
-
-      return (
-        <S.TableauColumn key={tableauColumnId}>
-          {renderCards(tableauColumnCards, sourceInfo)}
-        </S.TableauColumn>
-      );
     });
   };
 
