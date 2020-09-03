@@ -40,4 +40,5 @@ export const ControlPanel = styled.footer`
   padding: 20px;
   position: fixed;
   width: 100%;
+  z-index: 3;
 `;
