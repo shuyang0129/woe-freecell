@@ -25,6 +25,7 @@ const Card = ({ cardId, sourceType, sourceId }) => {
     },
     canDrag: () => checkIsCardDraggable(game, { cardId, sourceType, sourceId }),
     isDragging: monitor => {
+      // 如果drop了，就返回false
       if (monitor.didDrop()) return false;
       return checkIsCardDragging(game, dragItem, { cardId, sourceType, sourceId });
     },
@@ -35,6 +36,7 @@ const Card = ({ cardId, sourceType, sourceId }) => {
   });
 
   useEffect(() => {
+    // 拖曳的時候，將拖曳中的卡片消失
     preview(getEmptyImage(), { captureDraggingState: true });
   }, [preview]);
 
