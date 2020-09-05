@@ -11,7 +11,7 @@ import _ from 'lodash';
  */
 
 // prettier-ignore
-const POKER_CARDS = [
+export const POKER_CARDS = [
   "C1", "D1", "H1", "S1", 
   "C2", "D2", "H2", "S2", 
   "C3", "D3", "H3", "S3", 
