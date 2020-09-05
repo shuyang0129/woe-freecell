@@ -15,6 +15,7 @@ import {
   possibleMoveToTableau,
   getSuitNameFromCard,
 } from '@utils/freecell';
+import { initCardLocations } from './locationAction';
 
 import _ from 'lodash';
 import { randomNum } from '@utils';
@@ -41,6 +42,7 @@ export const startNewGame = gameCode => (dispatch, getState) => {
 
   // 3) 產生牌局
   const game = generateNewGame(code);
+  dispatch(initCardLocations(game));
 
   // 4) 複製目前state
   const { game: gameState } = getState();
