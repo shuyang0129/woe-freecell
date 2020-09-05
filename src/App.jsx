@@ -7,6 +7,7 @@ import {
   restartGame,
   startNewGame,
   undoGameState,
+  moveAutomatically,
 } from './actions/gameAction';
 
 import CardContextProvider from './providers/CardContextProvider';
@@ -37,54 +38,62 @@ const App = () => {
         sourceType: 'tableau',
       }),
     );
-    dispatch(
-      moveToFoundationCell({
-        targetId: 'CLUB',
-        sourceId: 'tableauColumn-5',
-        cardId: 'C1',
-        sourceType: 'tableau',
-      }),
-    );
-    dispatch(
-      moveToFoundationCell({
-        targetId: 'SPADE',
-        sourceId: 'tableauColumn-5',
-        cardId: 'S1',
-        sourceType: 'tableau',
-      }),
-    );
-    dispatch(
-      moveToFoundationCell({
-        targetId: 'CLUB',
-        sourceId: 'freeCell-1',
-        cardId: 'C2',
-        sourceType: 'freeCells',
-      }),
-    );
-    dispatch(
-      moveToFreeCell({
-        targetId: 'freeCell-1',
-        sourceId: 'tableauColumn-6',
-        cardId: 'C8',
-        sourceType: 'tableau',
-      }),
-    );
-    dispatch(
-      moveToTableau({
-        targetId: 'tableauColumn-5',
-        sourceId: 'tableauColumn-6',
-        cardId: 'H11',
-        sourceType: 'tableau',
-      }),
-    );
-    dispatch(
-      moveToTableau({
-        targetId: 'tableauColumn-5',
-        sourceId: 'tableauColumn-7',
-        cardId: 'C10',
-        sourceType: 'tableau',
-      }),
-    );
+    // dispatch(
+    //   moveToFoundationCell({
+    //     targetId: 'CLUB',
+    //     sourceId: 'tableauColumn-5',
+    //     cardId: 'C1',
+    //     sourceType: 'tableau',
+    //   }),
+    // );
+    // dispatch(
+    //   moveToFoundationCell({
+    //     targetId: 'SPADE',
+    //     sourceId: 'tableauColumn-5',
+    //     cardId: 'S1',
+    //     sourceType: 'tableau',
+    //   }),
+    // );
+    // dispatch(
+    //   moveToFoundationCell({
+    //     targetId: 'CLUB',
+    //     sourceId: 'freeCell-1',
+    //     cardId: 'C2',
+    //     sourceType: 'freeCells',
+    //   }),
+    // );
+    // dispatch(
+    //   moveToFreeCell({
+    //     targetId: 'freeCell-1',
+    //     sourceId: 'tableauColumn-6',
+    //     cardId: 'C8',
+    //     sourceType: 'tableau',
+    //   }),
+    // );
+    // dispatch(
+    //   moveToTableau({
+    //     targetId: 'tableauColumn-5',
+    //     sourceId: 'tableauColumn-6',
+    //     cardId: 'H11',
+    //     sourceType: 'tableau',
+    //   }),
+    // );
+    // dispatch(
+    //   moveToTableau({
+    //     targetId: 'tableauColumn-5',
+    //     sourceId: 'tableauColumn-7',
+    //     cardId: 'C10',
+    //     sourceType: 'tableau',
+    //   }),
+    // );
+    // dispatch(
+    //   moveAutomatically({
+    //     targetId: 'CLUB',
+    //     sourceId: 'tableauColumn-5',
+    //     cardId: 'C1',
+    //     sourceType: 'tableau',
+    //   }),
+    // );
     // dispatch(
     //   moveToFreeCell({
     //     targetId: 'freeCell-3',

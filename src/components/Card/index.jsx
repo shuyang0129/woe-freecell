@@ -8,10 +8,12 @@ import { CardContext } from '../../providers/CardContextProvider';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 import { getSelectingCards } from '../../utils/freecell';
 import { useDrag } from 'react-dnd';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { moveAutomatically } from '@actions/gameAction';
 
 const Card = ({ cardId, sourceType, sourceId }) => {
   const imgSrc = useContext(CardContext);
+  const dispatch = useDispatch();
 
   const game = useSelector(({ game }) => game);
 
@@ -35,6 +37,10 @@ const Card = ({ cardId, sourceType, sourceId }) => {
     }),
   });
 
+  const handleDoubleCick = () => {
+    dispatch(moveAutomatically({ cardId, sourceType, sourceId }));
+  };
+
   useEffect(() => {
     // 拖曳的時候，將拖曳中的卡片消失
     preview(getEmptyImage(), { captureDraggingState: true });
@@ -46,6 +52,7 @@ const Card = ({ cardId, sourceType, sourceId }) => {
       src={imgSrc[cardId]}
       alt="poker card"
       ref={drag}
+      onDoubleClick={handleDoubleCick}
     />
   ) : null;
 };

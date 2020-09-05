@@ -13,10 +13,12 @@ import {
   possibleMoveToFoundationCells,
   possibleMoveToFreeCells,
   possibleMoveToTableau,
+  getSuitNameFromCard,
 } from '@utils/freecell';
 
 import _ from 'lodash';
 import { randomNum } from '@utils';
+import * as cells from '@constants/cells';
 
 export const initGame = () => ({
   type: INIT_GAME,
@@ -81,19 +83,19 @@ export const moveToFreeCell = ({ cardId, targetId, sourceId, sourceType }) => (
 
   // 3) 移動卡片
   // 要確認: 1.目標freeCell是不是空的 2.目的地位置有沒有這張卡片 3.卡片是否為目的地位置最後一張牌
-  const sourceCells = newGameState[sourceType][sourceId];
+  const sourceCell = newGameState[sourceType][sourceId];
   const targetCells = newGameState.freeCells[targetId];
 
   // 3-1) 確認：目標freeCell是不是空的
   const isFreeCellEmpty = targetCells.length === 0;
   // 3-2) 確認：目的地位置有沒有這張卡片
-  const isCardExist = sourceCells.includes(cardId);
+  const isCardExist = sourceCell.includes(cardId);
   // 3-3) 確認：卡片是否為目的地位置最後一張牌
-  const isCardLastItem = isCardExist && sourceCells.indexOf(cardId) === sourceCells.length - 1;
+  const isCardLastItem = isCardExist && sourceCell.indexOf(cardId) === sourceCell.length - 1;
 
   // 3-4) 上述條件成立，[移除]來源位置的卡片；[新增]目的地位置卡片
   if (isFreeCellEmpty && isCardExist && isCardLastItem) {
-    sourceCells.pop();
+    sourceCell.pop();
     targetCells.push(cardId);
     // 4) 更新牌局
     dispatch(updateGameState(newGameState));
@@ -119,7 +121,7 @@ export const moveToFoundationCell = ({ cardId, targetId, sourceId, sourceType })
   const newGameState = _.cloneDeep(gameState);
 
   // 3) 移動卡片
-  const sourceCells = newGameState[sourceType][sourceId];
+  const sourceCell = newGameState[sourceType][sourceId];
   const targetCells = newGameState.foundationCells[targetId];
 
   // 3-0) 如果FoundationCells已經滿了，不做其他動作
@@ -133,13 +135,13 @@ export const moveToFoundationCell = ({ cardId, targetId, sourceId, sourceType })
   const isCardCorrect = cardId === correctCardId;
 
   // 確認：目的地位置有沒有這張卡片
-  const isCardExist = sourceCells.includes(cardId);
+  const isCardExist = sourceCell.includes(cardId);
   // 確認：卡片是否為目的地位置最後一張牌
-  const isCardLastItem = isCardExist && sourceCells.indexOf(cardId) === sourceCells.length - 1;
+  const isCardLastItem = isCardExist && sourceCell.indexOf(cardId) === sourceCell.length - 1;
 
   // 3-2) 移除來源卡片;將卡片加入目標區域
   if (isCardCorrect && isCardExist && isCardLastItem) {
-    sourceCells.pop();
+    sourceCell.pop();
     targetCells.push(cardId);
     // 3-3) 更新牌局
     dispatch(updateGameState(newGameState));
@@ -164,19 +166,19 @@ export const moveToTableau = ({ cardId, targetId, sourceId, sourceType }) => (
   // 2) 複製目前state
   const newGameState = _.cloneDeep(gameState);
 
-  const sourceCells = newGameState[sourceType][sourceId];
+  const sourceCell = newGameState[sourceType][sourceId];
   const targetCells = newGameState.tableau[targetId];
 
   // 3) 確認是否可以移動
   // 3-1) [確認]卡片存在
   // 先取得卡片Index
-  const sourceCardIndex = sourceCells.indexOf(cardId);
+  const sourceCardIndex = sourceCell.indexOf(cardId);
   // 如果不存在這張卡片，不做任何事
   if (sourceCardIndex < 0) return;
 
   //  3-2) [確認]有效排序（花色應該要相間、數字應該要遞減排序）
   // 取得移動中卡片們(這個情況可能多張)
-  const movingCards = sourceCells.slice(sourceCardIndex);
+  const movingCards = sourceCell.slice(sourceCardIndex);
   // 如果移動中的卡片是無效的排序，不做任何事
   if (!checkIsValidSequence(movingCards)) return;
 
@@ -185,7 +187,7 @@ export const moveToTableau = ({ cardId, targetId, sourceId, sourceType }) => (
     // 4-1) 取出目標區域最後一張牌
     const lastCardInTargetCells = targetCells[targetCells.length - 1];
     // 4-2) 取得移動中卡片們(這個情況可能多張)
-    const movingCards = sourceCells.slice(sourceCardIndex);
+    const movingCards = sourceCell.slice(sourceCardIndex);
     // 4-3) 加入目標區域最後一張牌
     movingCards.unshift(lastCardInTargetCells);
     // 如果是無效排序，不做任何事情
@@ -193,11 +195,63 @@ export const moveToTableau = ({ cardId, targetId, sourceId, sourceType }) => (
   }
 
   // 5) 移除來源卡片;將卡片加入目標區域
-  sourceCells.splice(sourceCardIndex, movingCards.length);
+  sourceCell.splice(sourceCardIndex, movingCards.length);
   targetCells.push(...movingCards);
 
   // 6) 更新牌局
   dispatch(updateGameState(newGameState));
+};
+
+export const moveAutomatically = ({ cardId, sourceId, sourceType }) => (dispatch, getState) => {
+  // 1) 取得目前牌局
+  const { game: gameState } = getState();
+  // 2) 複製目前state
+  const newGameState = _.cloneDeep(gameState);
+  // 3) 取得目前牌的cell區域
+  const sourceCell = newGameState[sourceType][sourceId];
+
+  // 4) [防錯]如果來自Tableau，確認是不是TableColumn最後一張牌
+  const isFromTableau = sourceType === cells.TABLEAU;
+  const isLastCardInTableauColumn = isFromTableau && sourceCell[sourceCell.length - 1] === cardId;
+  // 來自Tableau，但不是Tableau的最後一張牌，就略過
+  if (isFromTableau && !isLastCardInTableauColumn) return;
+
+  // 5) 找尋可放置位置，優先順序：foundationCells -> freeCells
+  // 5-1) [foundationCells]先找到對應牌色的foundationCell，看看指定牌是不是被需要的牌
+  // 指定牌的牌色
+  const currentSuit = getSuitNameFromCard(cardId);
+  // 同牌色的foundationCell目前需要什麼牌
+  const suitCode = currentSuit[0];
+  const cellLength = newGameState.foundationCells[currentSuit].length;
+  const cardNum = cellLength + 1;
+  const cardTheyNeed = `${suitCode}${cardNum}`;
+
+  // 如果指定牌等於對應foundationCell所需要的牌，將牌移動到對應的foundationCell
+  if (cardId === cardTheyNeed && cellLength <= 13) {
+    return dispatch(
+      moveToFoundationCell({
+        cardId,
+        sourceId,
+        sourceType,
+        targetId: currentSuit,
+      }),
+    );
+  }
+
+  // 5-2) [freeCells]看看是否有空位，沒有就略過，有就將牌移動到第一個空位
+  // 進入迴圈，當找到的第一個freeCell是空的時候，將牌放進去
+  Object.entries(newGameState.freeCells).forEach(([freeCellId, freeCell]) => {
+    if (freeCell.length === 0) {
+      return dispatch(
+        moveToFreeCell({
+          cardId,
+          sourceId,
+          sourceType,
+          targetId: freeCellId,
+        }),
+      );
+    }
+  });
 };
 
 /**
