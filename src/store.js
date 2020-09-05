@@ -20,15 +20,16 @@ store.subscribe(() => {
   const state = store.getState();
   console.log('state', state);
 
-  sessionStorage.setItem(SOLITAIRE, JSON.stringify(state));
+  // 遊戲開始後，開始紀錄遊戲狀態在sessionStorage中
+  if (state.play.isGameStarted) sessionStorage.setItem(SOLITAIRE, JSON.stringify(state));
 
   // 如果步數大於0，遊戲開始
   if (state.play.moves > 0 && !state.play.isGameStarted) {
     store.dispatch(updateIsGameStarted(true));
   }
 
-  // 如果遊戲贏了清除sessionStorage，這樣重整就不會停留在最後贏的狀態
-  if (state.play.isGameWin) sessionStorage.clear();
+  // 如果遊戲還沒開始或贏了，清除sessionStorage
+  if (state.play.isGameWin || !state.play.isGameStarted) sessionStorage.clear();
 
   // 檢查遊戲是否贏了
   if (!state.play.isGameWin && checkIsGameWin(state.game)) {

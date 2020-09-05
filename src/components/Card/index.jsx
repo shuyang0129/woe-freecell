@@ -1,7 +1,7 @@
 import * as S from './style';
 import * as dndType from '@constants/dndType';
 
-import React, { memo, useContext, useEffect } from 'react';
+import React, { memo, useContext, useEffect, useRef } from 'react';
 import { checkIsCardDraggable, checkIsCardDragging } from '@utils/freecell';
 
 import { CardContext } from '../../providers/CardContextProvider';

@@ -1,10 +1,15 @@
 import styled, { keyframes } from 'styled-components';
+import Solitaire from '@pages/Solitaire';
 
-const move = keyframes`
-  from {
-    transform: translate(-900px, -900px);
+const move = isGameStarted => {
+  if (!isGameStarted) {
+    return keyframes`
+      from {
+        transform: translate(-900px, -900px);
+      }
+    `;
   }
-`;
+};
 
 export const Card = styled.img.attrs(({ location }) => {
   if (!location) return;
@@ -19,6 +24,13 @@ export const Card = styled.img.attrs(({ location }) => {
   border-radius: 5px;
   height: 145px;
   width: 95px;
-  animation: ${move} 0.3s ease-in-out 1 both;
+  animation-name: ${({ isGameStarted }) => {
+    return !isGameStarted && move(isGameStarted);
+  }};
+  animation-duration: 0.3s;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: both;
+  /* animation: ${move} 0.3s ease-in-out 1 both; */
   z-index: 2;
 `;
