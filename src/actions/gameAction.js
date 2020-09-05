@@ -184,7 +184,7 @@ export const moveToTableau = ({ cardId, targetId, sourceId, sourceType }) => (
 
   //  4) 如果目標區域不是空的，確定卡片是否可以放置
   if (targetCells.length) {
-    // 4-1) 取出目標區域最後一張牌
+    // 3-2-1) 如果目標區域不是空的，連同目標區域最後一張確認是否是有效排序
     const lastCardInTargetCells = targetCells[targetCells.length - 1];
     // 4-2) 取得移動中卡片們(這個情況可能多張)
     const movingCards = sourceCell.slice(sourceCardIndex);
