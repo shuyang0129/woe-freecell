@@ -402,6 +402,12 @@ export const checkIsCardDragging = (gameState, dragingItem, { cardId, sourceType
   return isValidSequence ? draggingCards.includes(cardId) : false;
 };
 
+/**
+ * @name checkIsGameWin
+ * @description 確認Game State，如果FoundationCells中每個Cell都有13張，遊戲就贏了
+ * @param {Object} gameState
+ * @returns Boolean
+ */
 export const checkIsGameWin = gameState => {
   if (!gameState) return;
 
