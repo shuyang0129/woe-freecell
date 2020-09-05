@@ -401,3 +401,12 @@ export const checkIsCardDragging = (gameState, dragingItem, { cardId, sourceType
 
   return isValidSequence ? draggingCards.includes(cardId) : false;
 };
+
+export const checkIsWin = gameState => {
+  if (!gameState) return;
+
+  const gameStateClone = _.cloneDeep(gameState);
+  const { foundationCells } = gameStateClone;
+
+  return Object.values(foundationCells).every(cell => cell.length === 13);
+};
