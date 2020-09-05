@@ -15,7 +15,7 @@ const Card = ({ cardId, sourceType, sourceId }) => {
   const imgSrc = useContext(CardContext);
   const dispatch = useDispatch();
 
-  const game = useSelector(({ game }) => game);
+  const { game, play, locations } = useSelector(state => state);
 
   const [{ isDragging, dragItem }, drag, preview] = useDrag({
     item: {
@@ -49,6 +49,8 @@ const Card = ({ cardId, sourceType, sourceId }) => {
   return !!imgSrc[cardId] ? (
     <S.Card
       style={{ opacity: isDragging ? '0' : '1' }}
+      isGameStarted={play.isGameStarted}
+      location={locations && locations[cardId]}
       src={imgSrc[cardId]}
       alt="poker card"
       ref={drag}
