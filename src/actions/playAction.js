@@ -17,6 +17,12 @@ export const updateGameCode = gameCode => ({
   payload: { gameCode },
 });
 
+// 更新遊戲是否贏了
+export const updateIsGameWin = isGameWin => ({
+  type: actionType.UPDATE_IS_GAME_WIN,
+  payload: { isGameWin },
+});
+
 // 增加步數
 export const increaseMoves = () => ({
   type: actionType.INCREASE_MOVES,

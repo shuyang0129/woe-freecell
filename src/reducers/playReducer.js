@@ -23,6 +23,12 @@ export const playReducer = (state = defaultPlayState, action) => {
     return { ...state, gameCode };
   }
 
+  // 更新遊戲是否贏了
+  if (action.type === actionType.UPDATE_IS_GAME_WIN) {
+    const { isGameWin } = action.payload;
+    return { ...state, isGameWin };
+  }
+
   // 增加步數
   if (action.type === actionType.INCREASE_MOVES) {
     return { ...state, moves: state.moves + 1 };

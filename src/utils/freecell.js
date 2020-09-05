@@ -402,7 +402,7 @@ export const checkIsCardDragging = (gameState, dragingItem, { cardId, sourceType
   return isValidSequence ? draggingCards.includes(cardId) : false;
 };
 
-export const checkIsWin = gameState => {
+export const checkIsGameWin = gameState => {
   if (!gameState) return;
 
   const gameStateClone = _.cloneDeep(gameState);

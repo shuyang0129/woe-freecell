@@ -32,5 +32,6 @@ export const defaultPlayState = {
   draggingCards: [],
   possibleMove: null,
   isGameStarted: false,
+  isGameWin: false,
   isHintVisible: false,
 };
