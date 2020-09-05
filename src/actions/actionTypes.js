@@ -5,6 +5,7 @@ export const UPDATE_GAME = 'UPDATE_GAME';
 
 // Play相關
 export const INIT_PLAY = 'INIT_PLAY';
+export const UPDATE_PLAY = 'UPDATE_PLAY';
 export const UPDATE_GAMECODE = 'UPDATE_GAMECODE';
 export const UPDATE_DRAGGING_CARDS = 'UPDATE_DRAGGING_CARDS';
 export const RESET_DRAGGING_CARDS = 'RESET_DRAGGING_CARDS';

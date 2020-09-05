@@ -7,8 +7,11 @@ import {
   restartGame,
   startNewGame,
   undoGameState,
+  updateGameState,
   moveAutomatically,
-} from './actions/gameAction';
+} from '@actions/gameAction';
+import { updatePlay } from '@actions/playAction';
+import { SOLITAIRE } from '@constants/sessionStorage';
 
 import CardContextProvider from './providers/CardContextProvider';
 import { DndProvider } from 'react-dnd';
@@ -21,87 +24,13 @@ const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(startNewGame(1));
-    dispatch(
-      moveToFreeCell({
-        targetId: 'freeCell-0',
-        sourceId: 'tableauColumn-5',
-        cardId: 'D3',
-        sourceType: 'tableau',
-      }),
-    );
-    dispatch(
-      moveToFreeCell({
-        targetId: 'freeCell-1',
-        sourceId: 'tableauColumn-5',
-        cardId: 'C2',
-        sourceType: 'tableau',
-      }),
-    );
-    // dispatch(
-    //   moveToFoundationCell({
-    //     targetId: 'CLUB',
-    //     sourceId: 'tableauColumn-5',
-    //     cardId: 'C1',
-    //     sourceType: 'tableau',
-    //   }),
-    // );
-    // dispatch(
-    //   moveToFoundationCell({
-    //     targetId: 'SPADE',
-    //     sourceId: 'tableauColumn-5',
-    //     cardId: 'S1',
-    //     sourceType: 'tableau',
-    //   }),
-    // );
-    // dispatch(
-    //   moveToFoundationCell({
-    //     targetId: 'CLUB',
-    //     sourceId: 'freeCell-1',
-    //     cardId: 'C2',
-    //     sourceType: 'freeCells',
-    //   }),
-    // );
-    // dispatch(
-    //   moveToFreeCell({
-    //     targetId: 'freeCell-1',
-    //     sourceId: 'tableauColumn-6',
-    //     cardId: 'C8',
-    //     sourceType: 'tableau',
-    //   }),
-    // );
-    // dispatch(
-    //   moveToTableau({
-    //     targetId: 'tableauColumn-5',
-    //     sourceId: 'tableauColumn-6',
-    //     cardId: 'H11',
-    //     sourceType: 'tableau',
-    //   }),
-    // );
-    // dispatch(
-    //   moveToTableau({
-    //     targetId: 'tableauColumn-5',
-    //     sourceId: 'tableauColumn-7',
-    //     cardId: 'C10',
-    //     sourceType: 'tableau',
-    //   }),
-    // );
-    // dispatch(
-    //   moveAutomatically({
-    //     targetId: 'CLUB',
-    //     sourceId: 'tableauColumn-5',
-    //     cardId: 'C1',
-    //     sourceType: 'tableau',
-    //   }),
-    // );
-    // dispatch(
-    //   moveToFreeCell({
-    //     targetId: 'freeCell-3',
-    //     sourceId: 'CLUB',
-    //     cardId: 'C2',
-    //     sourceType: 'foundationCells',
-    //   }),
-    // );
+    const gameStorage = JSON.parse(sessionStorage.getItem(SOLITAIRE));
+
+    if (!gameStorage) return dispatch(startNewGame());
+
+    const { game: gameState, play: playState } = gameStorage;
+    dispatch(updateGameState(gameState, false));
+    dispatch(updatePlay(playState, false));
   }, [dispatch]);
 
   return (

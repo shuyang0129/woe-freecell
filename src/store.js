@@ -1,7 +1,8 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import reducers from '@/reducers';
 import reduxThunk from 'redux-thunk';
-import { updateIsGameStarted } from './actions/playAction';
+import { updateIsGameStarted } from '@actions/playAction';
+import { SOLITAIRE } from '@constants/sessionStorage';
 
 const isDev = process.env.NODE_ENV === 'development';
 
@@ -14,9 +15,12 @@ const store = createStore(
 );
 
 store.subscribe(() => {
-  const { play } = store.getState();
+  const gameState = store.getState();
+  sessionStorage.setItem(SOLITAIRE, JSON.stringify(gameState));
   // 如果步數大於0，遊戲開始
-  if (play.moves > 0 && !play.isGameStarted) store.dispatch(updateIsGameStarted(true));
+  if (gameState.play.moves > 0 && !gameState.play.isGameStarted) {
+    store.dispatch(updateIsGameStarted(true));
+  }
 
   console.log(store.getState());
 });

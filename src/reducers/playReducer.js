@@ -12,6 +12,11 @@ export const playReducer = (state = defaultPlayState, action) => {
     return defaultPlayState;
   }
 
+  if (action.type === actionType.UPDATE_PLAY) {
+    const { newPlayState } = action.payload;
+    return newPlayState;
+  }
+
   // 更新Game Code
   if (action.type === actionType.UPDATE_GAMECODE) {
     const { gameCode } = action.payload;

@@ -5,6 +5,12 @@ export const initPlay = () => ({
   type: actionType.INIT_PLAY,
 });
 
+// 更新遊玩資訊
+export const updatePlay = newPlayState => ({
+  type: actionType.UPDATE_PLAY,
+  payload: { newPlayState },
+});
+
 // 更新Game Code
 export const updateGameCode = gameCode => ({
   type: actionType.UPDATE_GAMECODE,
