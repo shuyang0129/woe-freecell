@@ -233,62 +233,36 @@ export const possibleMoveToTableau = gameState => {
       const currentSequence = cards.slice(i);
       // 2) 如果是非合法的排序，就停止迴圈
       if (!checkIsValidSequence(currentSequence)) break;
-      // 3) 合法的排序，就放入everyLastCardInTableauColumn這個物件
+      // 3) 合法的排序，就放入everyLastValidSequenceInTableauColumn這個物件
       everyLastValidSequenceInTableauColumn[columnId] = currentSequence;
     }
 
+    // 這部分，在取得每個tableColumn的最後一張牌，放到everyLastCardInTableauColumn
     const len = cards.length;
     everyLastCardInTableauColumn[columnId] = len > 0 ? cards[len - 1] : null;
   });
 
-  // 1) 取得每個TableauColumn的最後一張牌，並組成物件，以便未來取得Column的Key
-  // const everyLastCardInTableauColumn = {};
-
-  // Object.entries(newGameState.tableau).forEach(([columnId, cards]) => {
-  //   // for (let i = cards.length - 1; i >= 0; i--) {
-  //   //   // 1) 從每個column尾部擷取多張卡片
-  //   //   const currentSequence = cards.slice(i);
-  //   //   // 2) 如果是非合法的排序，就停止迴圈
-  //   //   if (!checkIsValidSequence(currentSequence)) return;
-  //   //   // 3) 合法的排序，就放入everyLastCardInTableauColumn這個物件
-  //   //   everyLastCardInTableauColumn[columnId] = currentSequence;
-  //   // }
-
-  //   const len = cards.length;
-  //   everyLastCardInTableauColumn[columnId] = len > 0 ? cards[len - 1] : null;
-  // });
-
-  console.log('everyLastValidSequenceInTableauColumn', everyLastValidSequenceInTableauColumn);
-  console.log('everyLastCardInTableauColumn', everyLastCardInTableauColumn);
-
-  // 從Tableau自身，交叉比對去找到可能的配對
+  // 從Tableau自身，利用everyLastValidSequenceInTableauColumn以及everyLastCardInTableauColumn，
+  // 去交叉比對去找到可能的配對
+  // 外層的迴圈是移動的牌組
   Object.entries(everyLastValidSequenceInTableauColumn).forEach(([matchedId, matchedCards]) => {
-    // 如果matched card是空的，跳過不執行
-    if (!matchedCards) return;
     // 如果找到了，就不用再執行接下來的程式碼
     if (!!possibleMove) return;
+    // 如果matched card是空的，跳過不執行
+    if (!matchedCards) return;
 
+    // 內層的迴圈是放置的位子
     Object.entries(everyLastCardInTableauColumn).forEach(([referenceId, referenceCard]) => {
       // 如果找到了，就不用再執行接下來的程式碼
       if (!!possibleMove) return;
-      // 如果matched card是空的，跳過不執行
-      if (!matchedCards) return;
       // 同一個column，跳過不執行
       if (matchedId === referenceId) return;
-      // 如果reference card是空的，因為可以接受任何一張牌，回傳第一個找到的牌組的第一張牌
-      // if (!referenceCard) {
-      //   return (possibleMove = {
-      //     cardId: matchedCards[0],
-      //     targetId: referenceId,
-      //     targetType: cells.TABLEAU,
-      //     sourceId: matchedId,
-      //     sourceType: cells.TABLEAU,
-      //   });
-      // }
 
+      // 組成移動後的排序(加上放置位子的最後一張牌)，執行checkIsValidSequence，去看看是否是有效地移動
       const newSequence = [referenceCard, ...matchedCards];
-      if (checkIsValidSequence(newSequence)) {
-        console.log('checkIsValidSequence');
+      // 情況一：如果是有效的排序，將相關資料賦值到possibleMove變數
+      // 情況二：如果reference card是空的，因為可以接受任何一張牌，回傳第一張找到的牌
+      if (checkIsValidSequence(newSequence) || !referenceCard) {
         return (possibleMove = {
           cardId: matchedCards[0],
           targetId: referenceId,
@@ -297,42 +271,8 @@ export const possibleMoveToTableau = gameState => {
           sourceType: cells.TABLEAU,
         });
       }
-      console.log('newSequence', newSequence);
     });
-    // // 如果matched card是空的，跳過不執行
-    // if (!matchedCard) return;
-    // // 如果找到了，就不用再執行接下來的程式碼
-    // if (!!possibleMove) return;
-    // Object.entries(everyLastCardInTableauColumn).forEach(([referenceId, referenceCard]) => {
-    //   // 如果找到了，就不用再執行接下來的程式碼
-    //   if (!!possibleMove) return;
-    //   // 如果reference card是空的，因為可以接受任何一張牌，回傳第一張找到的牌
-    //   if (!referenceCard) {
-    //     return (possibleMove = {
-    //       cardId: matchedCard,
-    //       targetId: referenceId,
-    //       targetType: cells.TABLEAU,
-    //       sourceId: matchedId,
-    //       sourceType: cells.TABLEAU,
-    //     });
-    //   }
-    //   // 同一個顏色的話，跳過
-    //   if (checkIsCardBlack(matchedCard) === checkIsCardBlack(referenceCard)) return;
-    //   // 如果Reference Card不是1，且確認數字是符合的話，就更新possibleMove
-    //   const matchedCardNum = getNumberFromCard(matchedCard);
-    //   const referenceCardNum = getNumberFromCard(referenceCard);
-    //   if (referenceCardNum > 1 && matchedCardNum === referenceCardNum - 1) {
-    //     return (possibleMove = {
-    //       cardId: matchedCard,
-    //       targetId: referenceId,
-    //       targetType: cells.TABLEAU,
-    //       sourceId: matchedId,
-    //       sourceType: cells.TABLEAU,
-    //     });
-    //   }
-    // });
   });
-  console.log('possibleMove', possibleMove);
   return possibleMove;
 };
 
