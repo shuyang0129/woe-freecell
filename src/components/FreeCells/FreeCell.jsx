@@ -1,6 +1,7 @@
 import { renderCards } from '@utils/renderCard';
 import React from 'react';
 import withDropAbility from '@components/withDropAbility';
+import withHintForCell from '@components/withHintForCell';
 
 import * as S from './style';
 
@@ -13,8 +14,14 @@ import * as S from './style';
  * @description FreeCell的獨立元件，方便使用useDrop這個Hooks，以及拖放的相關處理
  */
 
-const FreeCell = React.forwardRef(({ freecellCards, sourceType, sourceId }, ref) => {
-  return <S.FreeCell ref={ref}>{renderCards(freecellCards, { sourceType, sourceId })}</S.FreeCell>;
-});
+const FreeCell = React.forwardRef(
+  ({ freecellCards, sourceType, sourceId, isShowHint, isCellEmpty }, ref) => {
+    return (
+      <S.FreeCell isShowHint={isShowHint} isCellEmpty={isCellEmpty} ref={ref}>
+        {renderCards(freecellCards, { sourceType, sourceId })}
+      </S.FreeCell>
+    );
+  },
+);
 
-export default withDropAbility(FreeCell);
+export default withHintForCell(withDropAbility(FreeCell));
