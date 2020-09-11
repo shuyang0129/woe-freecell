@@ -1,7 +1,7 @@
 import * as S from './style';
 import * as dndType from '@constants/dndType';
 
-import React, { memo, useContext, useEffect, useRef } from 'react';
+import React, { memo, useContext, useEffect, useRef, useState } from 'react';
 import { checkIsCardDraggable, checkIsCardDragging } from '@utils/freecell';
 
 import { CardContext } from '../../providers/CardContextProvider';
@@ -12,6 +12,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { moveAutomatically } from '@actions/gameAction';
 
 const Card = ({ cardId, sourceType, sourceId }) => {
+  const [isShowHint, setIsShowHint] = useState(false);
+
   const imgSrc = useContext(CardContext);
   const dispatch = useDispatch();
 
@@ -46,11 +48,35 @@ const Card = ({ cardId, sourceType, sourceId }) => {
     preview(getEmptyImage(), { captureDraggingState: true });
   }, [preview]);
 
+  // 邏輯判斷 isShowHint
+  useEffect(() => {
+    // 沒有possibleMove，不做任何事
+    if (!play.possibleMove) return;
+
+    // 如果不是同一個sourceId，不做任何事
+    if (play.possibleMove.sourceId !== sourceId) return;
+
+    // 取出當前Cell裡面所有牌
+    const cardsInCell = game[sourceType][sourceId];
+    // 找到possibleMove中cardId在當前Cell的index
+    const indexOfCardIdInPossibleMove = cardsInCell.indexOf(play.possibleMove.cardId);
+
+    // 如果找不到這張牌，不做任何事
+    if (indexOfCardIdInPossibleMove === -1) return;
+
+    // 根據index，slice該牌之下的其他牌組
+    const lastValidSequenceInCell = cardsInCell.slice(indexOfCardIdInPossibleMove);
+
+    // 如果目前的cardId包含在lastValidSequenceInCell中，isShowHint設為true
+    if (lastValidSequenceInCell.includes(cardId)) setIsShowHint(true);
+  }, [cardId, game, play.possibleMove, sourceId, sourceType]);
+
   return !!imgSrc[cardId] ? (
     <S.Card
       style={{ opacity: isDragging ? '0' : '1' }}
       isGameStarted={play.isGameStarted}
       location={locations && locations[cardId]}
+      isShowHint={isShowHint}
       src={imgSrc[cardId]}
       alt="poker card"
       ref={drag}

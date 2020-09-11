@@ -1,5 +1,4 @@
 import styled, { keyframes } from 'styled-components';
-import Solitaire from '@pages/Solitaire';
 
 const move = isGameStarted => {
   if (!isGameStarted) {
@@ -13,6 +12,7 @@ const move = isGameStarted => {
 
 export const Card = styled.img.attrs(({ location }) => {
   if (!location) return;
+
   return {
     style: {
       animationDelay: `${location.order * 0.08}s`,
@@ -21,6 +21,7 @@ export const Card = styled.img.attrs(({ location }) => {
 })`
   position: relative;
   display: block;
+  border: ${({ isShowHint }) => isShowHint && '1px solid #EF9A9A'};
   border-radius: 5px;
   height: 145px;
   width: 95px;
