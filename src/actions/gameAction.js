@@ -304,11 +304,11 @@ export const findPossibleMove = () => (dispatch, getState) => {
   const newGameState = _.cloneDeep(gameState);
 
   // 1) 先找，到FoundationCells的可能路徑
-  // if (!possibleMove) possibleMove = possibleMoveToFoundationCells(newGameState);
+  if (!possibleMove) possibleMove = possibleMoveToFoundationCells(newGameState);
   // 2) 再找，到Tableau的可能路徑
   if (!possibleMove) possibleMove = possibleMoveToTableau(newGameState);
   // 3) 最後找，到FreeCells的可能路徑
-  // if (!possibleMove) possibleMove = possibleMoveToFreeCells(newGameState);
+  if (!possibleMove) possibleMove = possibleMoveToFreeCells(newGameState);
 
   dispatch(updatePossibleMove(possibleMove));
 };
