@@ -5,6 +5,7 @@ import D from '@img/suits/D.png';
 import H from '@img/suits/H.png';
 import S from '@img/suits/S.png';
 import styled from 'styled-components';
+import { Card } from '@components/Card/style';
 
 export const FoundationCells = styled.div`
   align-items: center;
@@ -12,9 +13,10 @@ export const FoundationCells = styled.div`
   flex-flow: row nowrap;
 `;
 
-export const FoundationCell = styled.div.attrs(({ suit }) => ({
+export const FoundationCell = styled.div.attrs(({ suit, isShowHint, isCellEmpty }) => ({
   style: {
     backgroundImage: `url(${getSuitImg(suit)})`,
+    border: isShowHint && isCellEmpty && '1px solid #EF9A9A',
   },
 }))`
   background-color: rgba(252, 252, 252, 0.6);
@@ -34,6 +36,9 @@ export const FoundationCell = styled.div.attrs(({ suit }) => ({
     left: 0;
     position: absolute;
     top: 0;
+  }
+  & > ${Card} {
+    border: ${({ isShowHint, isCellEmpty }) => isShowHint && !isCellEmpty && '1px solid #EF9A9A'};
   }
 `;
 
