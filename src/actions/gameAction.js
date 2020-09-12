@@ -31,6 +31,8 @@ export const initGame = () => ({
  * @description 開始新牌局
  */
 export const startNewGame = gameCode => (dispatch, getState) => {
+  localStorage.removeItem('OPENING_ANIMATION');
+
   // 1) 初始化State
   dispatch(initPlay());
   dispatch(initGame());
@@ -58,6 +60,8 @@ export const startNewGame = gameCode => (dispatch, getState) => {
 
   // 6) 更新牌局
   dispatch(updateGameState(newGameState));
+
+  setImmediate(() => localStorage.setItem('OPENING_ANIMATION', true));
 };
 
 export const restartGame = () => (dispatch, getState) => {

@@ -1,7 +1,8 @@
 import styled, { keyframes } from 'styled-components';
 
 const move = isGameStarted => {
-  if (!isGameStarted) {
+  // if (!isGameStarted) {
+  if (!localStorage.getItem('OPENING_ANIMATION')) {
     return keyframes`
       from {
         transform: translate(-900px, -900px);
@@ -21,7 +22,7 @@ export const Card = styled.img.attrs(({ location }) => {
 })`
   position: relative;
   display: block;
-  border: ${({ isShowHint }) => isShowHint && '1px solid blue'};
+  border: ${({ isShowHint }) => isShowHint && '1px solid #EF9A9A'};
   border-radius: 5px;
   height: 145px;
   width: 95px;
