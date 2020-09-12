@@ -1,15 +1,5 @@
 import React, { useEffect } from 'react';
-import {
-  findPossibleMove,
-  moveToFoundationCell,
-  moveToFreeCell,
-  moveToTableau,
-  restartGame,
-  startNewGame,
-  undoGameState,
-  updateGameState,
-  moveAutomatically,
-} from '@actions/gameAction';
+import { startNewGame, updateGameState } from '@actions/gameAction';
 import { updatePlay } from '@actions/playAction';
 import { SOLITAIRE } from '@constants/sessionStorage';
 

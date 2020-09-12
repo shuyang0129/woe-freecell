@@ -8,20 +8,32 @@ import Logo from '@components/Logo';
 import React, { memo } from 'react';
 import Tableau from '@components/Tableau';
 
+import { updateIsHintVisble } from '@actions/playAction';
+import { useDispatch, useSelector } from 'react-redux';
+
 function Solitaire() {
+  const dispatch = useDispatch();
+  const { isHintVisible } = useSelector(state => state.play);
+
+  const handleCloseHintVisible = () => {
+    if (isHintVisible) dispatch(updateIsHintVisble());
+  };
+
   return (
-    <S.GameContainer>
-      <S.HeaderArea>
-        <FreeCells />
-        <Logo title="solitaire" />
-        <FoundationCells />
-      </S.HeaderArea>
-      <Tableau />
+    <>
+      <S.GameContainer onMouseDown={handleCloseHintVisible}>
+        <S.HeaderArea>
+          <FreeCells />
+          <Logo title="solitaire" />
+          <FoundationCells />
+        </S.HeaderArea>
+        <Tableau />
+      </S.GameContainer>
       <S.ControlPanel>
         <GameInfo />
         <ControllButtons />
       </S.ControlPanel>
-    </S.GameContainer>
+    </>
   );
 }
 

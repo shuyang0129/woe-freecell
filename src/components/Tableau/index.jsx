@@ -2,7 +2,6 @@ import * as S from './style';
 import * as cells from '@constants/cells';
 
 import React, { memo } from 'react';
-import { renderCards } from '@utils/renderCard';
 import { useSelector } from 'react-redux';
 import TableauColumn from './TableColumn';
 import { uniqueId } from 'lodash';

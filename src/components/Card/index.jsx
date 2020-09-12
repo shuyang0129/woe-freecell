@@ -1,7 +1,7 @@
 import * as S from './style';
 import * as dndType from '@constants/dndType';
 
-import React, { memo, useContext, useEffect, useRef, useState } from 'react';
+import React, { memo, useContext, useEffect, useState } from 'react';
 import { checkIsCardDraggable, checkIsCardDragging } from '@utils/freecell';
 
 import { CardContext } from '../../providers/CardContextProvider';
@@ -50,6 +50,10 @@ const Card = ({ cardId, sourceType, sourceId }) => {
 
   // 邏輯判斷 isShowHint
   useEffect(() => {
+    // 如果Redux關閉hint顯示，不顯示
+    if (!play.isHintVisible) return setIsShowHint(false);
+    // 初始化
+    setIsShowHint(false);
     // 沒有possibleMove，不做任何事
     if (!play.possibleMove) return;
 
@@ -69,7 +73,7 @@ const Card = ({ cardId, sourceType, sourceId }) => {
 
     // 如果目前的cardId包含在lastValidSequenceInCell中，isShowHint設為true
     if (lastValidSequenceInCell.includes(cardId)) setIsShowHint(true);
-  }, [cardId, game, play.possibleMove, sourceId, sourceType]);
+  }, [cardId, game, play.possibleMove, play.isHintVisible, sourceId, sourceType]);
 
   return !!imgSrc[cardId] ? (
     <S.Card

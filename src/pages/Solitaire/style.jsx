@@ -15,6 +15,7 @@ export const GameContainer = styled.div`
   top: 0;
   transform: translateX(-50%);
   width: 100%;
+  overflow-y: scroll;
 `;
 
 export const HeaderArea = styled.header`

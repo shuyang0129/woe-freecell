@@ -82,5 +82,11 @@ export const playReducer = (state = defaultPlayState, action) => {
     return { ...state, possibleMove };
   }
 
+  // 更新isHintVisble狀態
+  if (action.type === actionType.UPDATE_IS_HINT_VISIBLE) {
+    const { isHintVisible } = action.payload;
+    return { ...state, isHintVisible };
+  }
+
   return state;
 };

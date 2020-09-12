@@ -7,8 +7,12 @@ const withHintForCell = Component => props => {
   const { play, game } = useSelector(state => state);
 
   useEffect(() => {
-    setIsShowHint(false);
+    // 如果Redux關閉hint顯示，不顯示
+    if (!play.isHintVisible) return setIsShowHint(false);
 
+    // 初始化
+    setIsShowHint(false);
+    // 從props取出sourceType以及sourceId
     const { sourceType, sourceId } = props;
     // 如果 possibleMove 為 null，不做任何事
     if (!play.possibleMove) return;
@@ -17,7 +21,7 @@ const withHintForCell = Component => props => {
       setIsShowHint(true);
       if (game[sourceType][sourceId].length) setIsCellEmpty(false);
     }
-  }, [game, play.possibleMove, props]);
+  }, [game, play.possibleMove, play.isHintVisible, props]);
 
   return <Component {...props} isShowHint={isShowHint} isCellEmpty={isCellEmpty} />;
 };

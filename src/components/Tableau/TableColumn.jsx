@@ -15,14 +15,6 @@ import withHintForCell from '@components/withHintForCell';
  */
 const TableauColumn = React.forwardRef(
   ({ tableauColumnCards, sourceType, sourceId, isShowHint, isCellEmpty }, ref) => {
-    console.log(
-      'tableauColumnCards, sourceType, sourceId, isShowHint, isCellEmpty',
-      tableauColumnCards,
-      sourceType,
-      sourceId,
-      isShowHint,
-      isCellEmpty,
-    );
     return (
       <S.TableauColumn isShowHint={isShowHint} isCellEmpty={isCellEmpty} ref={ref}>
         {renderCards(tableauColumnCards, { sourceType, sourceId })}

@@ -66,3 +66,9 @@ export const updatePossibleMove = possibleMove => ({
   type: actionType.UPDATE_POSSIBLE_MOVE,
   payload: { possibleMove },
 });
+
+// 更新isHintVisble狀態
+export const updateIsHintVisble = isHintVisible => ({
+  type: actionType.UPDATE_IS_HINT_VISIBLE,
+  payload: { isHintVisible },
+});
