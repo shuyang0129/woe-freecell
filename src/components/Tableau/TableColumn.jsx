@@ -3,6 +3,7 @@ import * as S from './style';
 import React from 'react';
 import { renderCards } from '@utils/renderCard';
 import withDropAbility from '@components/withDropAbility';
+import withHintForCell from '@components/withHintForCell';
 
 /**
  * @name TableauColumn
@@ -12,12 +13,22 @@ import withDropAbility from '@components/withDropAbility';
  * @param {String} props.sourceId 這個FreeCell的sourceId，Ex: tableauColumn-0
  * @description TableauColumn的獨立元件，方便使用useDrop這個Hooks，以及拖放的相關處理
  */
-const TableauColumn = React.forwardRef(({ tableauColumnCards, sourceType, sourceId }, ref) => {
-  return (
-    <S.TableauColumn ref={ref}>
-      {renderCards(tableauColumnCards, { sourceType, sourceId })}
-    </S.TableauColumn>
-  );
-});
+const TableauColumn = React.forwardRef(
+  ({ tableauColumnCards, sourceType, sourceId, isShowHint, isCellEmpty }, ref) => {
+    console.log(
+      'tableauColumnCards, sourceType, sourceId, isShowHint, isCellEmpty',
+      tableauColumnCards,
+      sourceType,
+      sourceId,
+      isShowHint,
+      isCellEmpty,
+    );
+    return (
+      <S.TableauColumn isShowHint={isShowHint} isCellEmpty={isCellEmpty} ref={ref}>
+        {renderCards(tableauColumnCards, { sourceType, sourceId })}
+      </S.TableauColumn>
+    );
+  },
+);
 
-export default withDropAbility(TableauColumn);
+export default withHintForCell(withDropAbility(TableauColumn));

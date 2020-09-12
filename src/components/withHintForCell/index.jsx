@@ -7,6 +7,8 @@ const withHintForCell = Component => props => {
   const { play, game } = useSelector(state => state);
 
   useEffect(() => {
+    setIsShowHint(false);
+
     const { sourceType, sourceId } = props;
     // 如果 possibleMove 為 null，不做任何事
     if (!play.possibleMove) return;

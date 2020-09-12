@@ -21,7 +21,7 @@ export const Card = styled.img.attrs(({ location }) => {
 })`
   position: relative;
   display: block;
-  border: ${({ isShowHint }) => isShowHint && '1px solid #EF9A9A'};
+  border: ${({ isShowHint }) => (isShowHint ? '1px solid #EF9A9A' : '')};
   border-radius: 5px;
   height: 145px;
   width: 95px;
