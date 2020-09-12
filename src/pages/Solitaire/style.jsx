@@ -42,4 +42,6 @@ export const ControlPanel = styled.footer`
   position: fixed;
   width: 100%;
   z-index: 3;
+  max-width: 1200px;
+  min-width: 1054px;
 `;
