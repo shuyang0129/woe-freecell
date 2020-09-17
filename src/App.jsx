@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, Fragment } from 'react';
 import { startNewGame, updateGameState } from '@actions/gameAction';
 import { updatePlay } from '@actions/playAction';
 import { SOLITAIRE } from '@constants/sessionStorage';
@@ -6,6 +6,7 @@ import { SOLITAIRE } from '@constants/sessionStorage';
 import CardContextProvider from './providers/CardContextProvider';
 import { DndProvider } from 'react-dnd';
 import DraggingCards from './components/DragingCards';
+import Popup from './components/Popup';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import Solitaire from '@pages/Solitaire';
 import { useDispatch } from 'react-redux';
@@ -24,12 +25,15 @@ const App = () => {
   }, [dispatch]);
 
   return (
-    <DndProvider backend={HTML5Backend}>
-      <CardContextProvider>
-        <DraggingCards />
-        <Solitaire />
-      </CardContextProvider>
-    </DndProvider>
+    <Fragment>
+      <Popup />
+      <DndProvider backend={HTML5Backend}>
+        <CardContextProvider>
+          <DraggingCards />
+          <Solitaire />
+        </CardContextProvider>
+      </DndProvider>
+    </Fragment>
   );
 };
 
