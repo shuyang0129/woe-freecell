@@ -12,13 +12,14 @@ const store = createStore(
   reducers,
   compose(
     applyMiddleware(reduxThunk),
-    isDev && window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+    // isDev && window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+    window.__REDUX_DEVTOOLS_EXTENSION__(),
   ),
 );
 
 store.subscribe(() => {
   const state = store.getState();
-  console.log('state', state);
+  isDev && console.log('state', state);
 
   // 遊戲開始後，開始紀錄遊戲狀態在sessionStorage中
   if (state.play.isGameStarted) sessionStorage.setItem(SOLITAIRE, JSON.stringify(state));
