@@ -1,69 +1,69 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# 新接龍 Woe Freecell
 
-## Available Scripts
+[Demo](http://woe-freecell.surge.sh/)
 
-In the project directory, you can run:
+## 專案介紹
 
-### `yarn start`
+此專案使用 React 實作新接龍，使用到的技術包括：
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- ReactJS
+- Redux
+- Redux Thunk
+- Styled Component
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+_新接龍相關的邏輯，集中在 Redux Actions_
 
-### `yarn test`
+## 相關資源
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- [UI 設計 by Daphne](https://challenge.thef2e.com/user/2104?schedule=2826#works-2826)
+- [牌局運算式](https://rosettacode.org/wiki/Deal_cards_for_FreeCell)
+- [新接龍解答](http://freecellgamesolutions.com)
+- [新接龍規則](https://zh.wikipedia.org/wiki/%E6%96%B0%E6%8E%A5%E9%BE%8D)
 
-### `yarn build`
+## 截圖
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+![起始畫面](https://github.com/shuyang0129/woe-freecell/blob/master/src/assets/_presentation/start-page.png?raw=true)
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+## 操作
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- New Game: 開啟新牌局
+- Restart: 重啟目前牌局
+- Hint: 顯示提示
+- Undo: 回到上一步
+- Double Click: 自動移動到可移動位置
+- Drag & Drop: 拖放到合法位置(根據新接龍規則)
 
-### `yarn eject`
+## 專案完成進度
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### 基本操作
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- [x] 開啟新牌局
+- [x] 重啟目前牌局
+- [x] 顯示提示
+- [x] 回到上一步
+- [x] 點擊兩下，自動移動到可移動位置
+- [x] 拖放到合法位置
+- [x] 單張或多張拖放
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### 動畫
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- [x] 起始動畫
+- [ ] 點擊兩下時，卡片移動動畫
 
-## Learn More
+### 其他
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- [ ] 遊戲成功畫面
+- [ ] 遊戲失敗畫面
+- [ ] 遊戲計時
+- [x] 遊戲步數計算
+- [ ] 遊戲步數顯示
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 在開發環境執行專案
 
-### Code Splitting
+1.  `yarn install`
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+    安裝專案所需依賴
 
-### Analyzing the Bundle Size
+2.  `yarn start`
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
-# woe-freecell
+    在本地執行專案
