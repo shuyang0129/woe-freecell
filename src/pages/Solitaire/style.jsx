@@ -30,18 +30,20 @@ export const HeaderArea = styled.header`
 `;
 
 export const ControlPanel = styled.footer`
-  align-items: center;
-  background: #e2e2e2;
-  border-top: 1px solid #ccc;
-  bottom: 0;
-  display: flex;
-  flex-flow: row nowrap;
-  flex: 0 0 auto;
-  max-width: 1200px;
-  padding: 20px;
-  position: fixed;
-  width: 100%;
-  z-index: 3;
-  max-width: 1200px;
-  min-width: 1054px;
+	align-items: center;
+	background: #e2e2e2;
+	border-top: 1px solid #ccc;
+	bottom: 0;
+	display: flex;
+	flex-flow: row nowrap;
+	flex: 0 0 auto;
+	left: 50%;
+	max-width: 1200px;
+	max-width: 1200px;
+	min-width: 1054px;
+	padding: 20px;
+	position: fixed;
+	transform: translateX(-50%);
+	width: 100%;
+	z-index: 3;
 `;
