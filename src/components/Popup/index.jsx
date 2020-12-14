@@ -13,7 +13,7 @@ const Popup = () => {
 
   useEffect(() => {
     if (checkIsGameWin(game)) setIsShowPopup(true);
-  }, [game, isShowPopup]);
+  }, [game]);
 
   if (!isShowPopup) return null;
 
